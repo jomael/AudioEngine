@@ -14,7 +14,8 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 
-#include "AudioSystem.hpp"
+//#include "AudioSystem.hpp"
+#include "al2/OpenALBackend.hpp"
 
 
 float vertices[] = {
@@ -584,31 +585,6 @@ public:
         programCompileStatus(m_id, __FILE__ , __LINE__);
     }
 
-    /*const char *getShaderReader(const std::string &shader)
-    {
-        std::string line;
-        std::string source;
-        std::ifstream file(shader);
-        if(file.is_open())
-        {
-            while(std::getline(file, line))
-            {
-                std::cerr << line << std::endl;
-                source = source + line; + "\n";
-            }
-
-            file.close();
-        }
-        else
-        {
-            std::cerr << "Cannot open file! " << shader << std::endl;
-        }
-
-        std::cerr << source << std::endl;
-
-        return source.c_str();
-     }*/
-
 
     void setUniformMatrix4x4(const std::string &type, const glm::mat4 &matrix)
     {
@@ -697,21 +673,24 @@ private:
 /////////////////////////////////////////////////////////////////////////////////////////////
 /// Audio example
 /////////////////////////////////////////////////////////////////////////////////////////////
-audio::al::AudioSystem *g_audioSystem;
-audio::al::Listener *g_listener;
+//audio::al::AudioSystem *g_audioSystem;
+//audio::al::Listener *g_listener;
+
+audio::newapi::OpenALBackend *g_backend = NULL;
 
 void loadAudio()
 {
-    g_audioSystem = new audio::al::AudioSystem();
-    g_listener = new audio::al::Listener();
+    g_backend = new audio::newapi::OpenALBackend();
+    //g_audioSystem = new audio::al::AudioSystem();
+    //g_listener = new audio::al::Listener();
 
-    g_audioSystem->loadFromFile("thunder","resources/thunder2_mono.wav");
-    g_audioSystem->loadFromFile("radio", "resources/radio_mono.wav");
+    //g_audioSystem->loadFromFile("thunder","resources/thunder2_mono.wav");
+    //g_audioSystem->loadFromFile("radio", "resources/radio_mono.wav");
 }
 
 void playAudio()
 {
-    std::shared_ptr<audio::al::Source> source_thunder = g_audioSystem->getSource("thunder");
+    /*std::shared_ptr<audio::al::Source> source_thunder = g_audioSystem->getSource("thunder");
     source_thunder->setPosition(glm::vec3(5.0f, 10.0f, 5.0f));
     //source_thunder->setDirection(glm::vec3(0.0f, 0.0f, 0.0f));
     source_thunder->setGain(8.0f);
@@ -726,13 +705,14 @@ void playAudio()
     source_radio->enableLoop(true);
     source_radio->enableRelativeListener(false);
     source_radio->setMinMaxDistance(0.0f, 2.0f);
-    source_radio->play();
+    source_radio->play();*/
 }
 
 void cleanupAudio()
 {
-    delete g_audioSystem;
-    delete g_listener;
+    //delete g_audioSystem;
+    //delete g_listener;
+    delete  g_backend;
 }
 
 int main(void)
@@ -896,7 +876,7 @@ int main(void)
         }
 
         // Update audio listener is camera
-        g_listener->updateListenerPosition(g_camera.getCameraPosition(), g_camera.getCameraFront());
+        //g_listener->updateListenerPosition(g_camera.getCameraPosition(), g_camera.getCameraFront());
 
         window.checkPoolEvents();
         window.checkSwapBuffer();

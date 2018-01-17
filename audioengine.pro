@@ -6,39 +6,23 @@ CONFIG -= qt
 
 LIBS += -lglfw3 -lGL -lGLEW -lm -lXrandr -lXi -lX11 -lXxf86vm -lpthread -lopenal
 
-SOURCES += main.cpp \
+SOURCES += \
+    al2/OpenALBackend.cpp \
+    utils/Error.cpp \
     utils/Log.cpp \
-    al/ALBuffer.cpp \
-    al/ALCreateSample.cpp \
-    al/ALDevice.cpp \
-    al/ALError.cpp \
-    al/ALListener.cpp \
-    al/ALOggSample.cpp \
-    al/ALSample.cpp \
-    al/ALSource.cpp \
-    al/ALWavSample.cpp \
-    AudioSystem.cpp \
     utils/StringUtils.cpp \
-    utils/Error.cpp
+    main.cpp \
+    stb_vorbis.c
+    main.cpp \
 
 HEADERS += \
+    stb_image.h \
     stb_vorbis.h \
-    utils/Log.hpp \
-    utils/Singleton.hpp \
-    al/ALBuffer.hpp \
-    al/ALCreateSample.hpp \
-    al/ALDevice.hpp \
-    al/ALError.hpp \
-    al/ALListener.hpp \
-    al/ALOggSample.hpp \
-    al/ALPositionSource.hpp \
-    al/ALSample.hpp \
-    al/ALSource.hpp \
-    al/ALSourceBase.hpp \
-    al/ALWavSample.hpp \
-    AudioSystem.hpp \
+    al2/OpenALBackend.hpp \
     utils/Debug.hpp \
-    utils/Exception.hpp \
-    utils/StringUtils.hpp \
     utils/Error.hpp \
-    utils/NonCopyable.hpp
+    utils/Exception.hpp \
+    utils/Log.hpp \
+    utils/NonCopyable.hpp \
+    utils/Singleton.hpp \
+    utils/StringUtils.hpp \
