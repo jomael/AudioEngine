@@ -15,7 +15,7 @@
 #include "stb_image.h"
 
 //#include "AudioSystem.hpp"
-#include "al2/OpenALBackend.hpp"
+#include "al2/AudioSystem.hpp"
 
 
 float vertices[] = {
@@ -676,11 +676,13 @@ private:
 //audio::al::AudioSystem *g_audioSystem;
 //audio::al::Listener *g_listener;
 
-audio::newapi::OpenALBackend *g_backend = NULL;
+audio::newapi::AudioSystem *g_backend = NULL;
 
 void loadAudio()
 {
-    g_backend = new audio::newapi::OpenALBackend();
+    g_backend = new audio::newapi::AudioSystem();
+    g_backend->TestAudio("resources/wind.ogg");
+
     //g_audioSystem = new audio::al::AudioSystem();
     //g_listener = new audio::al::Listener();
 
@@ -690,6 +692,7 @@ void loadAudio()
 
 void playAudio()
 {
+    g_backend->TestPlayAudio();
     /*std::shared_ptr<audio::al::Source> source_thunder = g_audioSystem->getSource("thunder");
     source_thunder->setPosition(glm::vec3(5.0f, 10.0f, 5.0f));
     //source_thunder->setDirection(glm::vec3(0.0f, 0.0f, 0.0f));

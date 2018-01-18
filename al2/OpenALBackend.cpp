@@ -23,9 +23,9 @@ OpenALBackend::OpenALBackend() : m_isInitialized(false)
         }
 
         m_context = alcCreateContext(m_device, nullptr);
-        if (m_context == nullptr || alcMakeContextCurrent(m_context) == ALC_FALSE)
+        if(m_context == nullptr || alcMakeContextCurrent(m_context) == ALC_FALSE)
         {
-            if (m_context != nullptr)
+            if(m_context != nullptr)
             {
                 alcDestroyContext(m_context);
             }
@@ -51,7 +51,7 @@ OpenALBackend::OpenALBackend() : m_isInitialized(false)
 
 OpenALBackend::~OpenALBackend()
 {
-    if (m_context)
+    if(m_context)
     {
         alcMakeContextCurrent(nullptr);
         alcDestroyContext(m_context);
@@ -59,7 +59,7 @@ OpenALBackend::~OpenALBackend()
         LOG("Destroy openal context");
     }
 
-    if (m_device)
+    if(m_device)
     {
         alcCloseDevice(m_device);
         m_device = nullptr;
