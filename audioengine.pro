@@ -1,5 +1,5 @@
 TEMPLATE = app
-CONFIG += c++11
+CONFIG += c++14
 CONFIG += console
 CONFIG -= app_bundle
 CONFIG -= qt
@@ -12,7 +12,8 @@ SOURCES += \
     utils/Log.cpp \
     utils/StringUtils.cpp \
     main.cpp \
-    stb_vorbis.c
+    stb_vorbis.c \
+    al2/AudioSystem.cpp
     main.cpp \
 
 HEADERS += \
@@ -26,3 +27,4 @@ HEADERS += \
     utils/NonCopyable.hpp \
     utils/Singleton.hpp \
     utils/StringUtils.hpp \
+    al2/AudioSystem.hpp

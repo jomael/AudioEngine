@@ -1,5 +1,5 @@
-#ifndef OPENA_AL_BACKEND_HPP
-#define OPENA_AL_BACKEND_HPP
+#ifndef OPENAL_BACKEND_HPP
+#define OPENAL_BACKEND_HPP
 
 #include <iostream>
 #include <glm/glm.hpp>
@@ -37,7 +37,6 @@ private:
     ALCcontext *m_context;
 
     /// This flag is for control initialize openal device and context.
-    /// Flag inhibiting for multi initilize openal device and context.
     bool m_isInitialized;
 };
 
