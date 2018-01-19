@@ -3,7 +3,7 @@
 
 #include <iostream>
 #include <glm/glm.hpp>
-
+#include <AL/al.h>
 
 class AudioSampleBase
 {
@@ -16,6 +16,7 @@ public:
     //virtual std::string name() const = 0;
     virtual int numberOfChannel() const = 0;
     //virtual int sizeofBytes() const = 0;
+    virtual ALuint getBuffer() const = 0;
 };
 
 struct AudioPropertiesBase
@@ -30,7 +31,11 @@ struct AudioPropertiesBase
 
 class AudioEmitterBase
 {
-    virtual ~AudioEmitterBase();
+public:
+
+    AudioEmitterBase() { }
+    virtual ~AudioEmitterBase() { }
+
     virtual void is2DSound() = 0;
     virtual void is3DSound() = 0;
     virtual void setPosition(glm::vec3 &position) = 0;
@@ -39,7 +44,7 @@ class AudioEmitterBase
     virtual void setPriority(float &volume) = 0;
     virtual void setStop(bool &stop) = 0;
     virtual void setLoop(bool &loop) = 0;
-    virtual AudioPropertiesBase getProperties() = 0;
+    //virtual AudioPropertiesBase getProperties() = 0;
 };
 
 #endif

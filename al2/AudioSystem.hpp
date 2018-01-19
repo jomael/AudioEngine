@@ -2,13 +2,13 @@
 #define AUDIOSYSTEM_HPP
 
 #include <memory>
+#include <vector>
+#include <unordered_map>
 #include <iostream>
 
 #include "ALBackend.hpp"
-#include "ALOggSample.hpp"
-#include "ALWavSample.hpp"
-
-#include "utils/Exception.hpp"
+#include "ALSource.hpp"
+#include "ALSoundEmitter.hpp"
 
 namespace audio
 {
@@ -21,20 +21,15 @@ public:
     AudioSystem();
     virtual ~AudioSystem();
 
-    void loadFromFile(const std::string &path);
+    void loadFromFile(const std::string &name,
+                      const std::string &path);
 
-private:
-
-    std::unique_ptr<AudioSampleBase> createSample(const std::string &path);
-
-
-};
-
-class AudioEmitter : public AudioEmitterBase
-{
 public:
-    virtual ~AudioEmitter();
-
+    //std::unique_ptr<AudioEmitter> createEmitter();
+    std::shared_ptr<audio::newapi::AudioSource> getEmitter(const std::string &name);
+private:
+    std::vector<std::shared_ptr<AudioEmitter>> m_emitters;
+    std::unordered_map<std::string, std::shared_ptr<AudioSource>> m_sources;
 };
 
 } // namespace audio::al
