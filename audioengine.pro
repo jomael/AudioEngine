@@ -7,19 +7,22 @@ CONFIG -= qt
 LIBS += -lglfw3 -lGL -lGLEW -lm -lXrandr -lXi -lX11 -lXxf86vm -lpthread -lopenal
 
 SOURCES += \
-    al2/OpenALBackend.cpp \
     utils/Error.cpp \
     utils/Log.cpp \
     utils/StringUtils.cpp \
     main.cpp \
     stb_vorbis.c \
-    al2/AudioSystem.cpp
+    al2/AudioSystem.cpp \
+    al2/ALBackend.cpp \
+    al2/ALBuffer.cpp \
+    al2/ALOggSample.cpp \
+    al2/ALWavSample.cpp \
+    al2/ALUtil.cpp
     main.cpp \
 
 HEADERS += \
     stb_image.h \
     stb_vorbis.h \
-    al2/OpenALBackend.hpp \
     utils/Debug.hpp \
     utils/Error.hpp \
     utils/Exception.hpp \
@@ -27,4 +30,10 @@ HEADERS += \
     utils/NonCopyable.hpp \
     utils/Singleton.hpp \
     utils/StringUtils.hpp \
-    al2/AudioSystem.hpp
+    al2/AudioSystem.hpp \
+    al2/ALSoundBase.hpp \
+    al2/ALBackend.hpp \
+    al2/ALBuffer.hpp \
+    al2/ALOggSample.hpp \
+    al2/ALWavSample.hpp \
+    al2/ALUtil.hpp
