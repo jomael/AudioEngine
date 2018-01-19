@@ -2,48 +2,39 @@
 #define AUDIOSYSTEM_HPP
 
 #include <memory>
+#include <iostream>
 
-#include "OpenALBackend.hpp"
+#include "ALBackend.hpp"
+#include "ALOggSample.hpp"
+#include "ALWavSample.hpp"
+
+#include "utils/Exception.hpp"
 
 namespace audio
 {
 namespace newapi
 {
 
-class AudioSystem
+class AudioSystem : public OpenALBackend
 {
 public:
     AudioSystem();
     virtual ~AudioSystem();
 
-    void TestAudio(const std::string &path);
-    void TestPlayAudio();
-
-    ALuint getFormatNumChannels(ALuint channels);
+    void loadFromFile(const std::string &path);
 
 private:
 
-    audio::newapi::OpenALBackend *alBackend;
-
-    ////////////////////////////////////////////
-    /// Number of channels in ogg file.
-    int m_channels;
-
-    /// Sample frequency ogg file. Usually 44100hz.
-    unsigned int m_sampleRate;
-
-    /// Total time ogg file in ms.
-    float m_duration;
-
-    /// Return code from stb_vorbis.
-    int m_error;
+    std::unique_ptr<AudioSampleBase> createSample(const std::string &path);
 
 
-    /////////////////////////////////////////////
-    // Buffer , Source
+};
 
-    ALuint m_buffer;
-    ALuint m_source;
+class AudioEmitter : public AudioEmitterBase
+{
+public:
+    virtual ~AudioEmitter();
+
 };
 
 } // namespace audio::al
