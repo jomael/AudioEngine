@@ -25,5 +25,20 @@ ALuint getFormatNumChannels(ALuint channels)
     return format;
 }
 
+std::unique_ptr<AudioSampleBase> createSample(const std::string &path)
+{
+    if(path.rfind(".wav") == path.size() - 4)
+    {
+        return std::make_unique<WavSample>(path);
+    }
+    else if(path.rfind(".ogg") == path.size() - 4)
+    {
+        return std::make_unique<OggSample>(path);
+    }
+
+    Throw(InvalidArgument,
+        strprintf("only .wav or .ogg files are currently supported, got '%s'", path.c_str()));
+}
+
 } // namespace audio::al
 } // namespace al

@@ -16,7 +16,7 @@ OggSample::OggSample() : m_channels(0), m_sampleRate(0.0), m_error(0)
 OggSample::OggSample(const std::string &path) : m_channels(0), m_sampleRate(0.0), m_error(0)
 {
     // Size of kilobyte for convert.
-    const float SIZE_KB = 1024.0;
+    //const float SIZE_KB = 1024.0;
 
     stb_vorbis *vorbis = stb_vorbis_open_filename(path.c_str(), &m_error, nullptr);
 

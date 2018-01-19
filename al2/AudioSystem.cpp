@@ -15,27 +15,34 @@ AudioSystem::~AudioSystem()
     LOG("Destructor");
 }
 
-void AudioSystem::loadFromFile(const std::string &path)
+void AudioSystem::loadFromFile(const std::string &name, const std::string &path)
 {
-    //std::unique_ptr<AudioSampleBase> base = createSoundSample(path);
+    if(!path.empty())
+    {
+        std::shared_ptr<AudioSource> source = std::make_shared<AudioSource>();
+        source->loadFromFile(path);
+        m_sources.insert(std::pair<std::string, std::shared_ptr<AudioSource>>(name, source));
+    }
+    else
+    {
+        LOG("Path for audio file is empty!");
+    }
 }
 
-
-std::unique_ptr<AudioSampleBase> AudioSystem::createSample(const std::string &path)
+std::shared_ptr<AudioSource> AudioSystem::getEmitter(const std::string &name)
 {
-    if(path.rfind(".wav") == path.size() - 4)
+    //std::shared_ptr<AudioSource> s;
+    //std::shared_ptr<AudioEmitter> emitter = std::make_shared<AudioEmitter>();
+    auto source = m_sources.find(name);
+    if(source != m_sources.end())
     {
-        return std::make_unique<WavSample>(path);
-    }
-    else if(path.rfind(".ogg") == path.size() - 4)
-    {
-        return std::make_unique<OggSample>(path);
+         return source->second;
     }
 
-    Throw(InvalidArgument,
-        strprintf("only .wav or .ogg files are currently supported, got '%s'", path.c_str()));
+    //s->play();
+    //Throw(InvalidArgument,
+    //    strprintf("Cannot for audio source according to key (name) '%s'", name.c_str()));
 }
-
 
 } // namespace audio::al
 } // namespace al

@@ -36,7 +36,7 @@ struct WavHeader
     int32_t bytesInData;
 };
 
-class WavSample : public AudioSampleBase, public ALBuffer
+class WavSample : public ALBuffer, public AudioSampleBase
 {
 public:
 
@@ -46,6 +46,7 @@ public:
 
     float duration() const { return m_duration; }
     int numberOfChannel() const   { return m_channels;}
+    ALuint getBuffer() const { return m_buffer;}
 
 private:
 

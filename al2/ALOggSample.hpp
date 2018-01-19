@@ -12,7 +12,7 @@ namespace newapi
 {
 
 /// Class represent load ogg files and decode ogg files.
-class OggSample : public AudioSampleBase, public ALBuffer
+class OggSample : public ALBuffer, public AudioSampleBase
 {
 public:
 
@@ -22,7 +22,7 @@ public:
 
     float duration() const { return m_duration; }
     int numberOfChannel() const   { return m_channels;}
-
+    ALuint getBuffer() const { return m_buffer;}
 private:
 
     /// Number of channels in ogg file.
@@ -36,6 +36,7 @@ private:
 
     /// Return code from stb_vorbis.
     int m_error;
+
 };
 
 } // namespace audio::al

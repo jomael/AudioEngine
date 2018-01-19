@@ -676,13 +676,13 @@ private:
 //audio::al::AudioSystem *g_audioSystem;
 //audio::al::Listener *g_listener;
 
-audio::newapi::AudioSystem *g_backend = NULL;
+audio::newapi::AudioSystem *g_audioSystem = NULL;
 
 void loadAudio()
 {
-    g_backend = new audio::newapi::AudioSystem();
-    //g_backend->loadFromFile("resources/wind.ogg");
-
+    g_audioSystem = new audio::newapi::AudioSystem();
+    g_audioSystem->loadFromFile("wind", "resources/wind.ogg");
+    g_audioSystem->loadFromFile("thunder","resources/thunder2_mono.wav");
     //g_audioSystem = new audio::al::AudioSystem();
     //g_listener = new audio::al::Listener();
 
@@ -692,9 +692,17 @@ void loadAudio()
 
 void playAudio()
 {
-    //g_backend->TestPlayAudio();
-    /*std::shared_ptr<audio::al::Source> source_thunder = g_audioSystem->getSource("thunder");
-    source_thunder->setPosition(glm::vec3(5.0f, 10.0f, 5.0f));
+    /// Only test for decoded source
+    //std::shared_ptr<audio::newapi::AudioSource> source_thunder = g_backend->getEmitter("thunder");
+    //source_thunder->enableRelativeListener(true);
+    //source_thunder->play();
+
+    //std::shared_ptr<audio::newapi::AudioSource> source_wind = g_backend->getEmitter("wind");
+    //source_wind->enableRelativeListener(true);
+    //source_wind->play();
+
+
+    /*source_thunder->setPosition(glm::vec3(5.0f, 10.0f, 5.0f));
     //source_thunder->setDirection(glm::vec3(0.0f, 0.0f, 0.0f));
     source_thunder->setGain(8.0f);
     source_thunder->enableLoop(true);
@@ -715,7 +723,7 @@ void cleanupAudio()
 {
     //delete g_audioSystem;
     //delete g_listener;
-    delete  g_backend;
+    delete  g_audioSystem;
 }
 
 int main(void)
