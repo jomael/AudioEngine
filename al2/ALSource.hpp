@@ -13,9 +13,6 @@ namespace audio
 namespace newapi
 {
 
-/// Class generate for every sound source id. AudioSource can be
-/// play, stop, pause. AudioSource have postion, velocity, direction
-/// gain and next attributes.
 class AudioSource
 {
 public:
@@ -26,18 +23,9 @@ public:
     /// Load from file sound
     void loadFromFile(const std::string &path);
 
-    /// Play concrete source
-    void play();
-
-    /// Stop concrete source
-    void stop();
-
-    /// Pause concrete source
-    void pause();
-
     /// Set postion vector source
-    void setPosition(const glm::vec3 &position);
-    void setPosition(const float &x, const float &y, const float &z);
+    //void setPosition(const glm::vec3 &position);
+    //void setPosition(const float &x, const float &y, const float &z);
 
     /// Set velocity vector source
     void setVelocity(const glm::vec3 &velocity);
@@ -89,7 +77,9 @@ public:
     ALuint getSource();
 
     /// Generate source id
-    void generateSource();
+    //void generateSource();
+
+    ALuint getSampleBuffer();
 
 private:
 

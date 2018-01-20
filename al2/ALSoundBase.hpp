@@ -27,6 +27,8 @@ struct AudioPropertiesBase
     float sampleRate = 0.0f;
     float minimumDistance = 0.0f;
     float maximumDistance = 0.0f;
+    ALuint idSource = 0;
+    ALuint idBuffer = 0;
 };
 
 class AudioEmitterBase
@@ -36,15 +38,13 @@ public:
     AudioEmitterBase() { }
     virtual ~AudioEmitterBase() { }
 
-    virtual void is2DSound() = 0;
-    virtual void is3DSound() = 0;
-    virtual void setPosition(glm::vec3 &position) = 0;
-    virtual void setSampleRate(float &sampleRate) = 0;
+    virtual bool is2DSound() = 0;
+    virtual bool is3DSound() = 0;
+    virtual void setPosition(const glm::vec3 &position) = 0;
     virtual void setVolume(float &volume) = 0;
     virtual void setPriority(float &volume) = 0;
     virtual void setStop(bool &stop) = 0;
     virtual void setLoop(bool &loop) = 0;
-    //virtual AudioPropertiesBase getProperties() = 0;
 };
 
 #endif
