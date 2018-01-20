@@ -14,9 +14,8 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 
-//#include "AudioSystem.hpp"
 #include "al2/AudioSystem.hpp"
-
+#include "al2/ALListener.hpp"
 
 float vertices[] = {
     -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
@@ -677,10 +676,12 @@ private:
 //audio::al::Listener *g_listener;
 
 audio::newapi::AudioSystem *g_audioSystem = NULL;
+audio::newapi::AudioListener *g_audioListener = NULL;
 
 void loadAudio()
 {
     g_audioSystem = new audio::newapi::AudioSystem();
+    g_audioListener = new audio::newapi::AudioListener();
     g_audioSystem->loadFromFile("wind", "resources/wind.ogg");
     g_audioSystem->loadFromFile("thunder","resources/thunder2_mono.wav");
     //g_audioSystem = new audio::al::AudioSystem();
@@ -693,13 +694,18 @@ void loadAudio()
 void playAudio()
 {
     /// Only test for decoded source
-    //std::shared_ptr<audio::newapi::AudioSource> source_thunder = g_backend->getEmitter("thunder");
+    //std::shared_ptr<audio::newapi::AudioEmitter> source_thunder = g_backend->getEmitter("thunder");
     //source_thunder->enableRelativeListener(true);
     //source_thunder->play();
 
     //std::shared_ptr<audio::newapi::AudioSource> source_wind = g_backend->getEmitter("wind");
     //source_wind->enableRelativeListener(true);
     //source_wind->play();
+
+    std::shared_ptr<audio::newapi::AudioEmitter> source_thunder = g_audioSystem->getEmitter("wind");
+    //source_thunder->enableRelativeListener(true);
+    source_thunder->setPosition(0.0f, 0.0f, 0.0f);
+    source_thunder->play();
 
 
     /*source_thunder->setPosition(glm::vec3(5.0f, 10.0f, 5.0f));
@@ -805,8 +811,9 @@ int main(void)
     shader.setUniformInt("texture1", 0);
 
     std::vector<glm::vec3> randomPosition;
-    randomPosition.push_back(glm::vec3(5.0f, 10.0f, 5.0f));
-    randomPosition.push_back(glm::vec3(0.0f, 0.0f, 5.0f));
+    //randomPosition.push_back(glm::vec3(5.0f, 10.0f, 5.0f));
+    //randomPosition.push_back(glm::vec3(0.0f, 0.0f, 5.0f));
+    randomPosition.push_back(glm::vec3(0.0f, 0.0f, 0.0f));
     /*for(int i = 0; i < 20; i++)
     {
         randomPosition.push_back(glm::vec3(static_cast <float> (rand() % 15 - 1) ,
@@ -862,8 +869,8 @@ int main(void)
                                       0.1f,
                                       100.0f);
 
-        //glm::mat4 transform;
-        //transform = glm::translate(transform, glm::vec3(0.0f, 0.0f, 0.0f));
+        glm::mat4 transform;
+        transform = glm::translate(transform, glm::vec3(0.0f, 0.0f, 0.0f));
         //transform = glm::rotate(transform, (float)glfwGetTime(), glm::vec3(0.0f, 0.0f, 1.0f));
         //glUniformMatrix4fv(mvp_location, 1, GL_FALSE, glm::value_ptr(transform));
 
@@ -887,7 +894,9 @@ int main(void)
         }
 
         // Update audio listener is camera
-        //g_listener->updateListenerPosition(g_camera.getCameraPosition(), g_camera.getCameraFront());
+        g_audioListener->updateListenerPosition(
+                    g_camera.getCameraPosition(),
+                    g_camera.getCameraFront());
 
         window.checkPoolEvents();
         window.checkSwapBuffer();

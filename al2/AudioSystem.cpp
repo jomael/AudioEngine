@@ -19,9 +19,11 @@ void AudioSystem::loadFromFile(const std::string &name, const std::string &path)
 {
     if(!path.empty())
     {
-        std::shared_ptr<AudioSource> source = std::make_shared<AudioSource>();
-        source->loadFromFile(path);
-        m_sources.insert(std::pair<std::string, std::shared_ptr<AudioSource>>(name, source));
+        std::shared_ptr<AudioEmitter> e = std::make_shared<AudioEmitter>();
+        e->create(path);
+
+        m_emitters.insert(std::pair<std::string,
+                          std::shared_ptr<AudioEmitter>>(name, e));
     }
     else
     {
@@ -29,19 +31,16 @@ void AudioSystem::loadFromFile(const std::string &name, const std::string &path)
     }
 }
 
-std::shared_ptr<AudioSource> AudioSystem::getEmitter(const std::string &name)
+std::shared_ptr<AudioEmitter> AudioSystem::getEmitter(const std::string &name)
 {
-    //std::shared_ptr<AudioSource> s;
-    //std::shared_ptr<AudioEmitter> emitter = std::make_shared<AudioEmitter>();
-    auto source = m_sources.find(name);
-    if(source != m_sources.end())
+    auto source = m_emitters.find(name);
+    if(source != m_emitters.end())
     {
          return source->second;
     }
 
-    //s->play();
-    //Throw(InvalidArgument,
-    //    strprintf("Cannot for audio source according to key (name) '%s'", name.c_str()));
+    Throw(InvalidArgument,
+        strprintf("Cannot for audio emitters according to key (name) '%s'", name.c_str()));
 }
 
 } // namespace audio::al

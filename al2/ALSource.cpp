@@ -30,60 +30,8 @@ AudioSource::~AudioSource()
 void AudioSource::loadFromFile(const std::string &path)
 {
     m_sample = createSample(path);
-
-    // NOTE: First must be initialized OpenAL device
-    // and then generate source id.
-    //generateSource();
-
-    alSourcei(m_source, AL_BUFFER, m_sample->getBuffer());
-    int status = alGetError();
-    if (status != AL_NO_ERROR)
-    {
-       LOG("OpenAL error");
-    }
 }
 
-void AudioSource::play()
-{
-    alSourcePlay(m_source);
-    int status = alGetError();
-    if (status != AL_NO_ERROR)
-    {
-        LOG("OpenAL error play");
-    }
-}
-
-void AudioSource::stop()
-{
-    alSourceStop(m_source);
-    int status = alGetError();
-    if (status != AL_NO_ERROR)
-    {
-        LOG("OpenAL error stop");
-    }
-}
-
-void AudioSource::pause()
-{
-    alSourcePause(m_source);
-    int status = alGetError();
-    if (status != AL_NO_ERROR)
-    {
-        LOG("OpenAL error pause");
-    }
-}
-
-void AudioSource::setPosition(const glm::vec3 &position)
-{
-    m_position = position;
-    alSource3f(m_source, AL_POSITION, m_position.x, m_position.y, m_position.z);
-}
-
-void AudioSource::setPosition(const float &x, const float &y, const float &z)
-{
-    m_position = glm::vec3(x, y, z);
-    alSource3f(m_source, AL_POSITION, m_position.x, m_position.y, m_position.z);
-}
 
 void AudioSource::setVelocity(const glm::vec3 &velocity)
 {
@@ -230,6 +178,11 @@ ALuint AudioSource::getSourceState()
 //{
 //    alGenSources(1, &m_source);
 //}
+
+ALuint AudioSource::getSampleBuffer()
+{
+    return m_sample->getBuffer();
+}
 
 } // namespace audio::al
 } // namespace al

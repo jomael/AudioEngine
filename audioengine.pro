@@ -19,7 +19,8 @@ SOURCES += \
     al2/ALWavSample.cpp \
     al2/ALUtil.cpp \
     al2/ALSource.cpp \
-    al2/ALSoundEmitter.cpp
+    al2/ALSoundEmitter.cpp \
+    al2/ALListener.cpp
     main.cpp \
 
 HEADERS += \
@@ -40,4 +41,5 @@ HEADERS += \
     al2/ALWavSample.hpp \
     al2/ALUtil.hpp \
     al2/ALSource.hpp \
-    al2/ALSoundEmitter.hpp
+    al2/ALSoundEmitter.hpp \
+    al2/ALListener.hpp
