@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include <memory>
+#include <cstddef>
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
@@ -65,6 +66,104 @@ unsigned int indices[] = {
         0, 1, 3, // first triangle
         1, 2, 3  // second triangle
     };
+
+struct VertexFormat
+{
+public:
+
+    glm::vec3 m_position;
+    glm::vec4 m_color;
+    glm::vec2 m_texture;
+
+    VertexFormat(const glm::vec3 &position, const glm::vec4 &color, const glm::vec2 &texel)
+    {
+        m_position = position;
+        m_color = color;
+        m_texture = texel;
+    }
+};
+
+class Sphere
+{
+public:
+
+    Sphere(/*float radius, unsigned int rings, unsigned int sectors*/)
+    {
+        std::vector<VertexFormat> vertices;
+        glm::vec4 blue = glm::vec4(0, 0, 1, 1);
+
+        int n = 1;
+        unsigned int rings = 24 * n;
+        unsigned int sectors = 48 * n;
+
+        float const R = 1.0f / (float)(rings - 1);
+        float const S = 1.0f / (float)(sectors - 1);
+
+        float pi = 3.14159265358979323846f;
+
+        for (unsigned int r = 0; r < rings; r++) {
+            for (unsigned int s = 0; s < sectors; s++) {
+
+                float const y = sin(-pi / 2.0f + pi * r * R);
+                float const x = cos(2 * pi * s * S) * sin(pi * r * R);
+                float const z = sin(2 * pi * s * S) * sin(pi * r * R);
+
+                glm::vec2 texCoord = glm::vec2(s*S, r*R);
+                glm::vec3 vxs = glm::vec3(x, y, z);
+
+                vertices.push_back(VertexFormat(vxs, blue, texCoord));
+            }
+        }
+
+        indices.resize(rings * sectors * 6);
+        std::vector<GLushort>::iterator i = indices.begin();
+        for (unsigned int r = 0; r < rings - 1; r++) {
+            for (unsigned int s = 0; s < sectors - 1; s++) {
+                *i++ = r * sectors + s;
+                *i++ = r * sectors + (s + 1);
+                *i++ = (r + 1) * sectors + (s + 1);
+
+                *i++ = (r + 1) * sectors + (s + 1);
+                *i++ = (r + 1) * sectors + s;
+                *i++ = r * sectors + s;
+            }
+        }
+
+
+        glGenVertexArrays(1, &m_vao);
+        glBindVertexArray(m_vao);
+        glGenBuffers(1, &m_vbo);
+        glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(VertexFormat) * vertices.size(), &vertices[0], GL_STATIC_DRAW);
+
+        glGenBuffers(1, &ibo);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(GLushort) * indices.size(), &indices[0], GL_STATIC_DRAW);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
+        glEnableVertexAttribArray(0);
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(VertexFormat), (void*)0);
+
+        glEnableVertexAttribArray(1);
+        glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(VertexFormat), (void*)(offsetof(VertexFormat, VertexFormat::m_color)));
+
+        glEnableVertexAttribArray(2);
+        glVertexAttribPointer(2, 2, GL_FLOAT, GL_TRUE, sizeof(VertexFormat), (void*)(offsetof(VertexFormat, VertexFormat::m_texture)));
+
+        glBindVertexArray(0);
+    }
+
+    void Draw()
+    {
+        glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_SHORT, &indices[0]);
+    }
+
+private:
+
+    GLuint m_vao, m_vbo, ibo;
+    std::vector<GLushort> indices;
+};
+
 
 const char* shaderVertex =
 "#version 330 core\n"
@@ -292,6 +391,7 @@ private:
 
 CameraSettings settings;
 FpsCamera g_camera(settings);
+Sphere *g_sphere = NULL;
 
 bool firstMouse = true;
 double lastX =  800.0 / 2.0;
@@ -835,6 +935,9 @@ int main(void)
     playAudio();
 
 
+    g_sphere = new Sphere();
+
+
     // Loop until the user closes the window
     while (!window.checkCloseWindow())
     {
@@ -893,6 +996,8 @@ int main(void)
           glDrawArrays(GL_TRIANGLES, 0, 36);
         }
 
+        g_sphere->Draw();
+
         // Update audio listener is camera
         g_audioListener->updateListenerPosition(
                     g_camera.getCameraPosition(),
@@ -902,11 +1007,15 @@ int main(void)
         window.checkSwapBuffer();
     }
 
+
     cleanupAudio();
+
+    delete g_sphere;
 
     glDeleteVertexArrays(1, &vao);
     glDeleteBuffers(1, &vbo);
     glDeleteBuffers(1, &ebo);
+
 
     return 0;
 }
