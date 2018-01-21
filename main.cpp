@@ -130,8 +130,12 @@ public:
         }
 
 
+        std::cerr << "vertices.size() " <<  vertices.size() << std::endl;
+        std::cerr << "indicies.size() " <<  indices.size() << std::endl;
+
         glGenVertexArrays(1, &m_vao);
         glBindVertexArray(m_vao);
+
         glGenBuffers(1, &m_vbo);
         glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
         glBufferData(GL_ARRAY_BUFFER, sizeof(VertexFormat) * vertices.size(), &vertices[0], GL_STATIC_DRAW);
@@ -142,19 +146,20 @@ public:
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
         glEnableVertexAttribArray(0);
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(VertexFormat), (void*)0);
+        glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(VertexFormat), (void*)0);
 
         glEnableVertexAttribArray(1);
-        glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(VertexFormat), (void*)(offsetof(VertexFormat, VertexFormat::m_color)));
+        glVertexAttribPointer(2, 4, GL_FLOAT, GL_FALSE, sizeof(VertexFormat), (void*)(offsetof(VertexFormat, VertexFormat::m_color)));
 
         glEnableVertexAttribArray(2);
-        glVertexAttribPointer(2, 2, GL_FLOAT, GL_TRUE, sizeof(VertexFormat), (void*)(offsetof(VertexFormat, VertexFormat::m_texture)));
+        glVertexAttribPointer(3, 2, GL_FLOAT, GL_TRUE, sizeof(VertexFormat), (void*)(offsetof(VertexFormat, VertexFormat::m_texture)));
 
         glBindVertexArray(0);
     }
 
     void Draw()
     {
+        glBindVertexArray(m_vao);
         glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_SHORT, &indices[0]);
     }
 
