@@ -87,14 +87,13 @@ class Sphere
 {
 public:
 
-    Sphere(/*float radius, unsigned int rings, unsigned int sectors*/)
+    Sphere(/*float radius, */unsigned int rings, unsigned int sectors)
     {
-        std::vector<VertexFormat> vertices;
         glm::vec4 blue = glm::vec4(0, 0, 1, 1);
 
-        int n = 1;
-        unsigned int rings = 24 * n;
-        unsigned int sectors = 48 * n;
+        int n = 2;
+        //unsigned int rings_ = rings * n;
+        //unsigned int sectors_ = 24 * n;
 
         float const R = 1.0f / (float)(rings - 1);
         float const S = 1.0f / (float)(sectors - 1);
@@ -128,11 +127,10 @@ public:
                 *i++ = r * sectors + s;
             }
         }
+    }
 
-
-        std::cerr << "vertices.size() " <<  vertices.size() << std::endl;
-        std::cerr << "indicies.size() " <<  indices.size() << std::endl;
-
+    void SetLocation(GLuint vpos_location, GLuint tex_location)
+    {
         glGenVertexArrays(1, &m_vao);
         glBindVertexArray(m_vao);
 
@@ -146,13 +144,13 @@ public:
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
         glEnableVertexAttribArray(0);
-        glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(VertexFormat), (void*)0);
+        glVertexAttribPointer(vpos_location, 3, GL_FLOAT, GL_FALSE, sizeof(VertexFormat), (void*)0);
 
         glEnableVertexAttribArray(1);
         glVertexAttribPointer(2, 4, GL_FLOAT, GL_FALSE, sizeof(VertexFormat), (void*)(offsetof(VertexFormat, VertexFormat::m_color)));
 
         glEnableVertexAttribArray(2);
-        glVertexAttribPointer(3, 2, GL_FLOAT, GL_TRUE, sizeof(VertexFormat), (void*)(offsetof(VertexFormat, VertexFormat::m_texture)));
+        glVertexAttribPointer(tex_location, 2, GL_FLOAT, GL_TRUE, sizeof(VertexFormat), (void*)(offsetof(VertexFormat, VertexFormat::m_texture)));
 
         glBindVertexArray(0);
     }
@@ -167,6 +165,7 @@ private:
 
     GLuint m_vao, m_vbo, ibo;
     std::vector<GLushort> indices;
+    std::vector<VertexFormat> vertices;
 };
 
 
@@ -396,7 +395,6 @@ private:
 
 CameraSettings settings;
 FpsCamera g_camera(settings);
-Sphere *g_sphere = NULL;
 
 bool firstMouse = true;
 double lastX =  800.0 / 2.0;
@@ -867,8 +865,8 @@ int main(void)
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+    //glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
+    //glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
     glVertexAttribPointer(vpos_location, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(vpos_location);
@@ -918,7 +916,7 @@ int main(void)
     std::vector<glm::vec3> randomPosition;
     //randomPosition.push_back(glm::vec3(5.0f, 10.0f, 5.0f));
     //randomPosition.push_back(glm::vec3(0.0f, 0.0f, 5.0f));
-    randomPosition.push_back(glm::vec3(0.0f, 0.0f, 0.0f));
+    randomPosition.push_back(glm::vec3(5.0f, 5.0f, 5.0f));
     /*for(int i = 0; i < 20; i++)
     {
         randomPosition.push_back(glm::vec3(static_cast <float> (rand() % 15 - 1) ,
@@ -940,7 +938,8 @@ int main(void)
     playAudio();
 
 
-    g_sphere = new Sphere();
+    Sphere sphere(10, 12);
+    sphere.SetLocation(vpos_location, tex_location);
 
 
     // Loop until the user closes the window
@@ -977,8 +976,8 @@ int main(void)
                                       0.1f,
                                       100.0f);
 
-        glm::mat4 transform;
-        transform = glm::translate(transform, glm::vec3(0.0f, 0.0f, 0.0f));
+        //glm::mat4 transform;
+        //transform = glm::translate(transform, glm::vec3(0.0f, 0.0f, 0.0f));
         //transform = glm::rotate(transform, (float)glfwGetTime(), glm::vec3(0.0f, 0.0f, 1.0f));
         //glUniformMatrix4fv(mvp_location, 1, GL_FALSE, glm::value_ptr(transform));
 
@@ -1001,7 +1000,15 @@ int main(void)
           glDrawArrays(GL_TRIANGLES, 0, 36);
         }
 
-        g_sphere->Draw();
+
+
+        glm::mat4 model;
+        model = glm::translate(model, glm::vec3(-5.f, -0.0f, 5.f));
+        //float angle = 20.0f * i;
+        //model = glm::rotate(model, glm::radians(0.0f), glm::vec3(1.0f, 0.3f, 0.5f));
+        //model = glm::scale(model, glm::vec3(0.3f, 0.3f, 0.3f));
+        shader.setUniformMatrix4x4("model", model);
+        sphere.Draw();
 
         // Update audio listener is camera
         g_audioListener->updateListenerPosition(
@@ -1015,7 +1022,6 @@ int main(void)
 
     cleanupAudio();
 
-    delete g_sphere;
 
     glDeleteVertexArrays(1, &vao);
     glDeleteBuffers(1, &vbo);
