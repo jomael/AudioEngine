@@ -83,34 +83,45 @@ public:
     }
 };
 
+struct VertexPosTex
+{
+public:
+
+    glm::vec3 m_position;
+    glm::vec2 m_texture;
+    //glm::vec4 m
+
+    VertexPosTex(const glm::vec3 &position, const glm::vec2 &texel)
+    {
+        m_position = position;
+        m_texture = texel;
+    }
+};
+
 class Sphere
 {
 public:
 
-    Sphere(/*float radius, */unsigned int rings, unsigned int sectors)
+    Sphere(unsigned int rings, unsigned int sectors)
     {
-        glm::vec4 blue = glm::vec4(0, 0, 1, 1);
+        float const R = 1.0f / (rings - 1);
+        float const S = 1.0f / (sectors - 1);
 
-        int n = 2;
-        //unsigned int rings_ = rings * n;
-        //unsigned int sectors_ = 24 * n;
+        float pi = 3.141592f;
 
-        float const R = 1.0f / (float)(rings - 1);
-        float const S = 1.0f / (float)(sectors - 1);
+        for(unsigned int r = 0; r < rings; r++)
+        {
+            for(unsigned int s = 0; s < sectors; s++)
+            {
 
-        float pi = 3.14159265358979323846f;
-
-        for (unsigned int r = 0; r < rings; r++) {
-            for (unsigned int s = 0; s < sectors; s++) {
-
-                float const y = sin(-pi / 2.0f + pi * r * R);
-                float const x = cos(2 * pi * s * S) * sin(pi * r * R);
-                float const z = sin(2 * pi * s * S) * sin(pi * r * R);
+                float const y = sinf(-pi / 2.0f + pi * r * R);
+                float const x = cosf(2 * pi * s * S) * sinf(pi * r * R);
+                float const z = sinf(2 * pi * s * S) * sinf(pi * r * R);
 
                 glm::vec2 texCoord = glm::vec2(s*S, r*R);
                 glm::vec3 vxs = glm::vec3(x, y, z);
 
-                vertices.push_back(VertexFormat(vxs, blue, texCoord));
+                vertices.push_back(VertexPosTex(vxs, texCoord));
             }
         }
 
@@ -136,7 +147,7 @@ public:
 
         glGenBuffers(1, &m_vbo);
         glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(VertexFormat) * vertices.size(), &vertices[0], GL_STATIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(VertexPosTex) * vertices.size(), &vertices[0], GL_STATIC_DRAW);
 
         glGenBuffers(1, &ibo);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
@@ -144,13 +155,13 @@ public:
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
         glEnableVertexAttribArray(0);
-        glVertexAttribPointer(vpos_location, 3, GL_FLOAT, GL_FALSE, sizeof(VertexFormat), (void*)0);
+        glVertexAttribPointer(vpos_location, 3, GL_FLOAT, GL_FALSE, sizeof(VertexPosTex), (void*)0);
 
         glEnableVertexAttribArray(1);
-        glVertexAttribPointer(2, 4, GL_FLOAT, GL_FALSE, sizeof(VertexFormat), (void*)(offsetof(VertexFormat, VertexFormat::m_color)));
+        glVertexAttribPointer(2, 4, GL_FLOAT, GL_FALSE, sizeof(VertexPosTex), (void*)(offsetof(VertexPosTex, VertexPosTex::m_texture)));
 
         glEnableVertexAttribArray(2);
-        glVertexAttribPointer(tex_location, 2, GL_FLOAT, GL_TRUE, sizeof(VertexFormat), (void*)(offsetof(VertexFormat, VertexFormat::m_texture)));
+        glVertexAttribPointer(tex_location, 2, GL_FLOAT, GL_TRUE, sizeof(VertexPosTex), (void*)(offsetof(VertexPosTex, VertexPosTex::m_texture)));
 
         glBindVertexArray(0);
     }
@@ -165,7 +176,7 @@ private:
 
     GLuint m_vao, m_vbo, ibo;
     std::vector<GLushort> indices;
-    std::vector<VertexFormat> vertices;
+    std::vector<VertexPosTex> vertices;
 };
 
 
