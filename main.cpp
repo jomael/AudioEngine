@@ -89,13 +89,88 @@ public:
 
     glm::vec3 m_position;
     glm::vec2 m_texture;
-    //glm::vec4 m
 
     VertexPosTex(const glm::vec3 &position, const glm::vec2 &texel)
     {
         m_position = position;
         m_texture = texel;
     }
+};
+
+
+class Cylinder
+{
+public:
+
+    Cylinder()
+    {
+
+        /*float x, y, theta;
+        int subs_z = 0, subs_xy = 10;
+        int cylinder_height = 10;
+        int cylinder_radius = 10;
+
+        for (int j = 0; j <= subs_z + 1; ++j)
+        {
+            float z = j * (cylinder_height / (float)(subs_z+1));
+            for (int i = 0; i < subs_xy; ++i)
+            {
+                theta = 2.0 * M_PI * i /( float)subs_xy;
+                x = sin(theta) * cylinder_radius;
+                y = cos(theta) * cylinder_radius;
+
+                //vert.push_back(VertexPosTex(glm::vec3(x, y, z)));
+                verts.push_back(glm::vec3(x, y, z));
+            }
+        }*/
+
+    }
+
+    void SetLocation(GLuint vpos_location, GLuint tex_location)
+    {
+        glGenVertexArrays(1, &m_vao);
+        glBindVertexArray(m_vao);
+
+        glGenBuffers(1, &m_vbo);
+        glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3) * verts.size(), &verts[0], GL_STATIC_DRAW);
+
+        //glGenBuffers(1, &ibo);
+        //glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
+        //glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(GLushort) * indices.size(), &indices[0], GL_STATIC_DRAW);
+        //glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
+        glEnableVertexAttribArray(0);
+        glVertexAttribPointer(vpos_location, 3, GL_FLOAT, GL_FALSE, sizeof(glm::vec3), (void*)0);
+
+        glEnableVertexAttribArray(1);
+        /*glVertexAttribPointer(2, 4, GL_FLOAT, GL_FALSE,
+                              sizeof(glm::vec3),
+                              (void*)(offsetof(glm::vec3, VertexPosTex::m_texture)));
+
+        glEnableVertexAttribArray(2);
+        glVertexAttribPointer(tex_location, 2, GL_FLOAT, GL_TRUE,
+                              sizeof(glm::vec3),
+                              (void*)(offsetof(glm::vec3, VertexPosTex::m_texture)));*/
+
+        glBindVertexArray(0);
+    }
+
+    void Draw()
+    {
+        glBindVertexArray(m_vao);
+        glDrawArrays(GL_TRIANGLES, 0, verts.size());
+    }
+
+private:
+
+    GLuint m_vao, m_vbo, ibo;
+
+private:
+
+    std::vector<VertexPosTex> vert;
+    std::vector<glm::vec3> verts;
+    std::vector< GLuint > faces;
 };
 
 class Sphere
@@ -107,28 +182,28 @@ public:
         float const R = 1.0f / (rings - 1);
         float const S = 1.0f / (sectors - 1);
 
-        float pi = 3.141592f;
-
         for(unsigned int r = 0; r < rings; r++)
         {
             for(unsigned int s = 0; s < sectors; s++)
             {
 
-                float const y = sinf(-pi / 2.0f + pi * r * R);
-                float const x = cosf(2 * pi * s * S) * sinf(pi * r * R);
-                float const z = sinf(2 * pi * s * S) * sinf(pi * r * R);
+                float const y = sinf(-glm::pi<float>() / 2.0f + glm::pi<float>() * r * R);
+                float const x = cosf(2 * glm::pi<float>() * s * S) * sinf(glm::pi<float>() * r * R);
+                float const z = sinf(2 * glm::pi<float>() * s * S) * sinf(glm::pi<float>() * r * R);
 
                 glm::vec2 texCoord = glm::vec2(s*S, r*R);
-                glm::vec3 vxs = glm::vec3(x, y, z);
+                glm::vec3 vertexPos = glm::vec3(x, y, z);
 
-                vertices.push_back(VertexPosTex(vxs, texCoord));
+                vertices.push_back(VertexPosTex(vertexPos, texCoord));
             }
         }
 
         indices.resize(rings * sectors * 6);
         std::vector<GLushort>::iterator i = indices.begin();
-        for (unsigned int r = 0; r < rings - 1; r++) {
-            for (unsigned int s = 0; s < sectors - 1; s++) {
+        for(unsigned int r = 0; r < rings - 1; r++)
+        {
+            for(unsigned int s = 0; s < sectors - 1; s++)
+            {
                 *i++ = r * sectors + s;
                 *i++ = r * sectors + (s + 1);
                 *i++ = (r + 1) * sectors + (s + 1);
@@ -140,7 +215,7 @@ public:
         }
     }
 
-    void SetLocation(GLuint vpos_location, GLuint tex_location)
+    void SetLocation(GLint vpos_location, GLint tex_location)
     {
         glGenVertexArrays(1, &m_vao);
         glBindVertexArray(m_vao);
@@ -158,10 +233,14 @@ public:
         glVertexAttribPointer(vpos_location, 3, GL_FLOAT, GL_FALSE, sizeof(VertexPosTex), (void*)0);
 
         glEnableVertexAttribArray(1);
-        glVertexAttribPointer(2, 4, GL_FLOAT, GL_FALSE, sizeof(VertexPosTex), (void*)(offsetof(VertexPosTex, VertexPosTex::m_texture)));
+        glVertexAttribPointer(2, 4, GL_FLOAT, GL_FALSE,
+                              sizeof(VertexPosTex),
+                              (void*)(offsetof(VertexPosTex, VertexPosTex::m_texture)));
 
         glEnableVertexAttribArray(2);
-        glVertexAttribPointer(tex_location, 2, GL_FLOAT, GL_TRUE, sizeof(VertexPosTex), (void*)(offsetof(VertexPosTex, VertexPosTex::m_texture)));
+        glVertexAttribPointer(tex_location, 2, GL_FLOAT, GL_TRUE,
+                              sizeof(VertexPosTex),
+                              (void*)(offsetof(VertexPosTex, VertexPosTex::m_texture)));
 
         glBindVertexArray(0);
     }
@@ -180,7 +259,7 @@ private:
 };
 
 
-const char* shaderVertex =
+static const char* shaderVertex =
 "#version 330 core\n"
 "uniform mat4 model;\n"
 "uniform mat4 view;\n"
@@ -197,7 +276,7 @@ const char* shaderVertex =
 "    color = vCol;\n"
 "}\n";
 
-const char* shaderFragment =
+static const char* shaderFragment =
 "#version 330 core\n"
 "varying vec3 color;\n"
 "varying vec2 TexCoord;\n"
@@ -656,15 +735,6 @@ public:
             shaderCompileStatus(m_fragmentShader, __FILE__ , __LINE__);
             m_isFragmentShader = true;
         }
-
-        /*if(type == TypeShader::GEOMETRY_SHADER)
-        {
-            const char *geometry_shader = getShaderReader(shader);
-            m_geometryShader = glCreateShader(GL_GEOMETRY_SHADER);
-            glShaderSource(m_geometryShader, 1, &geometry_shader, NULL);
-            glCompileShader(m_geometryShader);
-            m_isGeometryShader = true;
-        }*/
     }
 
     void useShaderProgram()
@@ -689,10 +759,6 @@ public:
         {
             glAttachShader(m_id, m_fragmentShader);
         }
-        /*if(m_isGeometryShader)
-        {
-            glAttachShader(m_id, m_geometryShader);
-        }*/
 
         glLinkProgram(m_id);
         programCompileStatus(m_id, __FILE__ , __LINE__);
@@ -775,11 +841,9 @@ private:
     GLuint m_id;
     GLuint m_vertexShader;
     GLuint m_fragmentShader;
-    GLuint m_geometryShader;
 
     bool m_isVertexShader;
     bool m_isFragmentShader;
-    bool m_isGeometryShader;
 };
 
 
@@ -789,8 +853,8 @@ private:
 //audio::al::AudioSystem *g_audioSystem;
 //audio::al::Listener *g_listener;
 
-audio::newapi::AudioSystem *g_audioSystem = NULL;
-audio::newapi::AudioListener *g_audioListener = NULL;
+audio::newapi::AudioSystem *g_audioSystem = nullptr;
+audio::newapi::AudioListener *g_audioListener = nullptr;
 
 void loadAudio()
 {
@@ -841,9 +905,8 @@ void playAudio()
 
 void cleanupAudio()
 {
-    //delete g_audioSystem;
-    //delete g_listener;
-    delete  g_audioSystem;
+    delete g_audioListener;
+    delete g_audioSystem;
 }
 
 int main(void)
@@ -860,7 +923,7 @@ int main(void)
     shader.loadShader("shader.frag", TypeShader::FRAGMENT_SHADER);
     shader.createShaderProgram();
 
-    GLuint /*mvp_location,*/ vpos_location, vcol_location, tex_location;
+    GLint /*mvp_location,*/ vpos_location, vcol_location, tex_location;
     //mvp_location  = glGetUniformLocation(shader.getShaderProgram(), "MVP");
     vpos_location = glGetAttribLocation(shader.getShaderProgram(), "vPos");
     vcol_location = glGetAttribLocation(shader.getShaderProgram(), "vCol");
@@ -952,6 +1015,12 @@ int main(void)
     Sphere sphere(10, 12);
     sphere.SetLocation(vpos_location, tex_location);
 
+    //Cylinder cylinder;
+    //cylinder.SetLocation(vpos_location, tex_location);
+
+
+    /// Debug only rendering lines
+    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
     // Loop until the user closes the window
     while (!window.checkCloseWindow())
@@ -966,6 +1035,7 @@ int main(void)
 
         // wipe the drawing surface clear
         glEnable(GL_DEPTH_TEST);
+
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         glClearColor(0.2f, 0.5f, 0.7f, 0.6f);
 
@@ -1020,6 +1090,8 @@ int main(void)
         //model = glm::scale(model, glm::vec3(0.3f, 0.3f, 0.3f));
         shader.setUniformMatrix4x4("model", model);
         sphere.Draw();
+
+        //cylinder.Draw();
 
         // Update audio listener is camera
         g_audioListener->updateListenerPosition(
