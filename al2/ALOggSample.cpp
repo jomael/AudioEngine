@@ -31,11 +31,11 @@ OggSample::OggSample(const std::string &path) : m_channels(0), m_sampleRate(0.0)
     m_duration = stb_vorbis_stream_length_in_seconds(vorbis);
     stb_vorbis_close(vorbis);
 
-    short *data;
-    int samples, sample_rate;
+    short *data = nullptr;
+    int samples = 0, sample_rate = 0;
     samples = stb_vorbis_decode_filename(path.c_str(), &m_channels, &sample_rate, &data);
 
-    ALuint format = getFormatNumChannels(m_channels);
+    ALuint format = getFormatNumChannels(static_cast<ALuint>(m_channels));
 
     std::clog << "---Ogg Audio info--- "    << "\n"
               << "Sampling rate : " << sample_rate / 1000.0 << " kHz " << "\n"
@@ -43,7 +43,8 @@ OggSample::OggSample(const std::string &path) : m_channels(0), m_sampleRate(0.0)
              // << "Size stream   : " << m_streamSize / (SIZE_KB * SIZE_KB) << " MB" << "\n"
               << "Duration      : " << m_duration << " ms " << "\n\n";
 
-    alBufferData(m_buffer, format, data, sizeof(short) * samples * m_channels, m_sampleRate);
+    alBufferData(m_buffer, static_cast<ALenum>(format),
+                 data, static_cast<ALsizei>(sizeof(short) * samples * m_channels), static_cast<ALsizei>(m_sampleRate));
 }
 
 OggSample::~OggSample()
