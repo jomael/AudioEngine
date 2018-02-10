@@ -16,6 +16,9 @@ The [emerald](https://github.com/EmeraldEngine/Emerald) is part of this example.
  * GLFW
  * GLEW
 
+### For contributions 
+ * Contribution are welcome !
+ 
 ## License
 >You can check out the full license [here](https://github.com/Martinfx/AudioEngine/blob/master/LICENSE)
 
