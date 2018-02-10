@@ -39,10 +39,12 @@ OpenALBackend::OpenALBackend() : m_isInitialized(false)
             const char *version = alGetString(AL_VERSION);
             const char *renderer = alGetString(AL_RENDERER);
             const char *vendor = alGetString(AL_VENDOR);
+            const char *extension = alGetString(AL_EXTENSIONS);
 
-            LOG("OpenAL version  : " + std::string(version));
-            LOG("OpenAL renderer : " + std::string(renderer));
-            LOG("OpenAL vendor   : " + std::string(vendor));
+            LOG("OpenAL version   : " + std::string(version));
+            LOG("OpenAL renderer  : " + std::string(renderer));
+            LOG("OpenAL vendor    : " + std::string(vendor));
+            LOG("OpenAL extension : " + std::string(extension));
             LOG("OpenAL init done");
         }
         m_isInitialized = true;
@@ -69,7 +71,7 @@ OpenALBackend::~OpenALBackend()
 
 bool OpenALBackend::isInitialized()
 {
-    return  m_isInitialized;
+    return m_isInitialized;
 }
 
 } // namespace audio::al

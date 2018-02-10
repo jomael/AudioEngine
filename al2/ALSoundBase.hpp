@@ -41,10 +41,12 @@ public:
     virtual bool is2DSound() = 0;
     virtual bool is3DSound() = 0;
     virtual void setPosition(const glm::vec3 &position) = 0;
+    virtual void setVelocity(const glm::vec3 &velocity) = 0;
+    virtual void setDirection(const glm::vec3 &direction) = 0;
     virtual void setVolume(float &volume) = 0;
     virtual void setPriority(float &volume) = 0;
-    virtual void setStop(bool &stop) = 0;
-    virtual void setLoop(bool &loop) = 0;
+    //virtual void setStop(bool &stop) = 0;
+    virtual void setLoop(bool loop) = 0;
 };
 
 #endif

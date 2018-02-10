@@ -5,9 +5,9 @@ namespace audio
 namespace newapi
 {
 
-ALuint getFormatNumChannels(ALuint channels)
+ALint getFormatNumChannels(ALuint channels)
 {
-    ALuint format = 0;
+    ALint format = 0;
     switch(channels) {
         case 1: format = AL_FORMAT_MONO16; break;
         case 2: format = AL_FORMAT_STEREO16; break;
@@ -37,7 +37,8 @@ std::unique_ptr<AudioSampleBase> createSample(const std::string &path)
     }
 
     Throw(InvalidArgument,
-        strprintf("only .wav or .ogg files are currently supported, got '%s'", path.c_str()));
+        strprintf("only .wav or .ogg files are currently supported, "
+                  "got '%s'", path.c_str()));
 }
 
 } // namespace audio::al

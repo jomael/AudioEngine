@@ -5,7 +5,7 @@ namespace audio
 namespace newapi
 {
 
-ALBuffer::ALBuffer()
+ALBuffer::ALBuffer() : m_buffer(0)
 {
     alGenBuffers(1, &m_buffer);
     LOG("Generated buffer");
@@ -17,7 +17,7 @@ ALBuffer::~ALBuffer()
     LOG("Deleted buffer");
 }
 
-ALuint ALBuffer::getBuffer()
+ALuint ALBuffer::getBuffer() const
 {
     return m_buffer;
 }

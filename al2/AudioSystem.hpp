@@ -21,33 +21,38 @@ class AudioSystemSettings
 public:
 
     /// Default value for every sound.
-    float master_gain = 1.0f;
+    const float master_gain = 1.0f;
 
     /// Default listener gain.
-    float default_listener_gain = 1.0f;
+    const float default_listener_gain = 1.0f;
 
     /// Doppler factor is a simple scaling of source and listener velocities
     /// to exaggerate or deemphasize the Doppler (pitch).
-    float doppler_factor = 1.0f;
+    const float doppler_factor = 1.0f;
 
     /// Default value for speed of sound for every sound.
-    float speed_of_sound = 343.3f;
+    const float speed_of_sound = 343.3f;
 };
 
 class AudioSystem : public OpenALBackend
 {
 public:
-    AudioSystem();
+
+    explicit AudioSystem();
+    explicit AudioSystem(AudioSystemSettings &settings);
     virtual ~AudioSystem();
 
     void loadFromFile(const std::string &name,
                       const std::string &path);
 
 public:
+
     std::shared_ptr<audio::newapi::AudioEmitter> getEmitter(const std::string &name);
 
-private:
+protected:
+
     std::unordered_map<std::string, std::shared_ptr<AudioEmitter>> m_emitters;
+    AudioSystemSettings m_settings;
 };
 
 } // namespace audio::al

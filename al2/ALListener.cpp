@@ -5,9 +5,21 @@ namespace audio
 namespace newapi
 {
 
-AudioListener::AudioListener() : m_position(0.0f, 0.0f, 0.0f), m_velocity(0.0f, 0.0f, 0.0f),
-    m_direction(0.f, 0.f, -1.f), m_up_vector(0.f, 1.f, 0.1f)
+AudioListener::AudioListener() : m_position(0.0f, 0.0f, 0.0f),
+    m_velocity(0.0f, 0.0f, 0.0f), m_direction(0.f, 0.f, -1.f),
+    m_up_vector(0.f, 1.f, 0.1f)
 {
+
+}
+
+AudioListener::AudioListener(AudioListenerSettings &audiosettings)
+    : m_audioSettings(audiosettings)
+{
+    m_position = audiosettings.defaultPosition;
+    m_velocity = audiosettings.defaultVelocity;
+    m_direction = audiosettings.defaultDirection;
+    m_up_vector = audiosettings.defaultUpVector;
+
     LOG("Constructor");
 }
 
@@ -64,7 +76,7 @@ void AudioListener::setDirection(const float &x, const float &y, const float &z)
     alListenerfv(AL_ORIENTATION, orientation);
 }
 
-void AudioListener::updateListenerPosition(const glm::vec3 &pos, const glm::vec3 &dir)
+void AudioListener::updateListener(const glm::vec3 &pos, const glm::vec3 &dir)
 {
     m_position = pos;
     m_direction = dir;
@@ -78,12 +90,12 @@ void AudioListener::updateListenerPosition(const glm::vec3 &pos, const glm::vec3
     alListenerfv(AL_ORIENTATION, orientation);
 }
 
-glm::vec3 AudioListener::getPosition()
+glm::vec3 AudioListener::getPosition() const
 {
     return m_position;
 }
 
-glm::vec3 AudioListener::getVelocity()
+glm::vec3 AudioListener::getVelocity() const
 {
     return m_velocity;
 }

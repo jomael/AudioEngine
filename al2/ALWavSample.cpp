@@ -19,22 +19,22 @@ WavSample::WavSample(const std::string &path) : m_file(path)
 
     std::ifstream file(path, std::ifstream::binary | std::ifstream::in);
     if(!file.is_open()) {
-       LOG("Error : Cannot open the audio file." + path);
+        LOG("Error : Cannot open the audio file." + path);
     }
 
     file.read(reinterpret_cast<char*>(&header), sizeof(header));
 
     if(memcmp(header.id, "RIFF", 4) != 0) {
-       LOG("ERROR : Bad RIFF header.");
+        LOG("ERROR : Bad RIFF header.");
     }
 
     if(memcmp(header.waveFmt, "WAVEfmt ", 8) != 0 ||
-       memcmp(header.data, "data", 4) != 0) {
-       LOG("ERROR: This file is not wav format!");
+            memcmp(header.data, "data", 4) != 0) {
+        LOG("ERROR: This file is not wav format!");
     }
 
     if(header.format != WAV_BIT_DEPTH) {
-      LOG("ERROR: This file is not 16 bit wav format.");
+        LOG("ERROR: This file is not 16 bit wav format.");
     }
 
     m_channels = header.channels;

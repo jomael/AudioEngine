@@ -22,7 +22,7 @@ class OpenALBackend : public Singleton<OpenALBackend>
 {
 public:
 
-    OpenALBackend();
+    explicit OpenALBackend();
     virtual ~OpenALBackend();
 
     /// Return true if device was initialize.

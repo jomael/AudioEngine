@@ -10,6 +10,12 @@ AudioSystem::AudioSystem()
     LOG("Constructor");
 }
 
+AudioSystem::AudioSystem(AudioSystemSettings &settings) :
+    m_settings(settings)
+{
+    LOG("Constructor");
+}
+
 AudioSystem::~AudioSystem()
 {
     LOG("Destructor");

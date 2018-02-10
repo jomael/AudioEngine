@@ -13,7 +13,7 @@ namespace audio
 namespace newapi
 {
 
-ALuint getFormatNumChannels(ALuint channels);
+ALint getFormatNumChannels(ALuint channels);
 
 std::unique_ptr<AudioSampleBase> createSample(const std::string &path);
 

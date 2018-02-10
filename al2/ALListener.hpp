@@ -11,15 +11,19 @@ namespace newapi
 
 class AudioListenerSettings
 {
-    glm::vec3 defaultPosition = glm::vec3(0.0f, 0.0f, 0.0f);
+public:
+    const glm::vec3 defaultPosition = glm::vec3(0.0f, 0.0f, 0.0f);
+    const glm::vec3 defaultVelocity = glm::vec3(0.0f, 0.0f, 0.0f);
+    const glm::vec3 defaultDirection = glm::vec3(0.f, 0.f, -1.f);
+    const glm::vec3 defaultUpVector = glm::vec3(0.f, 1.f, 0.1f);
 };
 
 class AudioListener
 {
-
 public:
 
-    AudioListener();
+    explicit AudioListener();
+    explicit AudioListener(AudioListenerSettings &audiosettings);
     virtual ~AudioListener();
 
     /// Set vector position listener
@@ -35,13 +39,13 @@ public:
     void setDirection(const float &x, const float &y, const float &z);
 
     /// Get vector position listener
-    glm::vec3 getPosition();
+    glm::vec3 getPosition() const;
 
     /// Get vector velocity listener
-    glm::vec3 getVelocity();
+    glm::vec3 getVelocity() const;
 
     /// Update every second position and direction listener
-    void updateListenerPosition(const glm::vec3 &pos, const glm::vec3 &dir);
+    void updateListener(const glm::vec3 &pos, const glm::vec3 &dir);
 
 private:
 
@@ -49,6 +53,7 @@ private:
     glm::vec3 m_velocity;
     glm::vec3 m_direction;
     glm::vec3 m_up_vector;
+    AudioListenerSettings m_audioSettings;
 };
 
 } // namespace audio::al

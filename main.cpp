@@ -675,17 +675,11 @@ protected:
             glfwTerminate();
         }
 
-       // Make the window's context current
        glfwMakeContextCurrent(m_window);
-
-       //glfwSetMouseButtonCallback(m_window, mouseButtonCallback);
        glfwSetKeyCallback(m_window, keyboardCallback);
        glfwSetCursorPosCallback(m_window, mouseCursorPositionCallback);
        glfwSetScrollCallback(m_window, scrollCallback);
-
        glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-
-       // start GLEW extension handler
        glewExperimental = GL_TRUE;
        glewInit();
     }
@@ -708,8 +702,7 @@ class Shader
 public:
 
     Shader() : m_vertexShader(0), m_fragmentShader(0),
-        m_geometryShader(0), m_isVertexShader(false),
-        m_isFragmentShader(false), m_isGeometryShader(false)
+        m_isVertexShader(false), m_isFragmentShader(false)
     { }
 
     ~Shader() {}
@@ -862,45 +855,18 @@ void loadAudio()
     g_audioListener = new audio::newapi::AudioListener();
     g_audioSystem->loadFromFile("wind", "resources/wind.ogg");
     g_audioSystem->loadFromFile("thunder","resources/thunder2_mono.wav");
-    //g_audioSystem = new audio::al::AudioSystem();
-    //g_listener = new audio::al::Listener();
-
-    //g_audioSystem->loadFromFile("thunder","resources/thunder2_mono.wav");
-    //g_audioSystem->loadFromFile("radio", "resources/radio_mono.wav");
 }
 
 void playAudio()
 {
-    /// Only test for decoded source
-    //std::shared_ptr<audio::newapi::AudioEmitter> source_thunder = g_backend->getEmitter("thunder");
-    //source_thunder->enableRelativeListener(true);
-    //source_thunder->play();
-
-    //std::shared_ptr<audio::newapi::AudioSource> source_wind = g_backend->getEmitter("wind");
-    //source_wind->enableRelativeListener(true);
-    //source_wind->play();
-
-    std::shared_ptr<audio::newapi::AudioEmitter> source_thunder = g_audioSystem->getEmitter("wind");
-    //source_thunder->enableRelativeListener(true);
-    source_thunder->setPosition(0.0f, 0.0f, 0.0f);
-    source_thunder->play();
-
-
-    /*source_thunder->setPosition(glm::vec3(5.0f, 10.0f, 5.0f));
-    //source_thunder->setDirection(glm::vec3(0.0f, 0.0f, 0.0f));
-    source_thunder->setGain(8.0f);
-    source_thunder->enableLoop(true);
-    source_thunder->enableRelativeListener(true);
-    source_thunder->setMinMaxDistance(0.0f, 0.2f);
-    source_thunder->play();
-
-    std::shared_ptr<audio::al::Source> source_radio = g_audioSystem->getSource("radio");
-    source_radio->setPosition(glm::vec3(0.0f, 0.0f, 5.0f));
-    source_radio->setGain(12.0f);
-    source_radio->enableLoop(true);
-    source_radio->enableRelativeListener(false);
-    source_radio->setMinMaxDistance(0.0f, 2.0f);
-    source_radio->play();*/
+    std::shared_ptr<audio::newapi::AudioEmitter> emitter1 = g_audioSystem->getEmitter("thunder");
+    emitter1->enableRelativeListener(true);
+    emitter1->setPosition(5.0f, 5.0f, 5.0f);
+    emitter1->setDirection(0.0f, 0.0f, 0.0f);
+    emitter1->setMinMaxDistance(0.0f, 0.2f);
+    emitter1->setGain(8.0f);
+    emitter1->setLoop(true);
+    emitter1->play();
 }
 
 void cleanupAudio()
@@ -942,14 +908,26 @@ int main(void)
     //glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
     //glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
-    glVertexAttribPointer(vpos_location, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
+    glVertexAttribPointer(vpos_location,
+                          3,
+                          GL_FLOAT, GL_FALSE,
+                          5 * sizeof(float), (void*)0);
+
     glEnableVertexAttribArray(vpos_location);
 
-    //glVertexAttribPointer(vcol_location, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
+    //glVertexAttribPointer(vcol_location, 3, GL_FLOAT, GL_FALSE,
+    //                      8 * sizeof(float), (void*)(3 * sizeof(float)));
+
     //glEnableVertexAttribArray(vcol_location);
 
     // texture coord attribute
-    glVertexAttribPointer(tex_location, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+    glVertexAttribPointer(tex_location,
+                          2,
+                          GL_FLOAT,
+                          GL_FALSE,
+                          5 * sizeof(float),
+                          (void*)(3 * sizeof(float)));
+
     glEnableVertexAttribArray(tex_location);
 
     unsigned int texture;
@@ -1021,6 +999,8 @@ int main(void)
 
     /// Debug only rendering lines
     glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
+    g_audioListener->setPosition(g_camera.getCameraPosition());
 
     // Loop until the user closes the window
     while (!window.checkCloseWindow())
@@ -1094,7 +1074,7 @@ int main(void)
         //cylinder.Draw();
 
         // Update audio listener is camera
-        g_audioListener->updateListenerPosition(
+        g_audioListener->updateListener(
                     g_camera.getCameraPosition(),
                     g_camera.getCameraFront());
 

@@ -18,7 +18,7 @@ public:
     virtual ~ALBuffer();
 
     // Gets actual buffer id.
-    ALuint getBuffer();
+    ALuint getBuffer() const;
 
 public:
 
