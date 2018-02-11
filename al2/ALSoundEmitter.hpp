@@ -1,7 +1,6 @@
-#ifndef ALSOUNDEMITTER_HPP
-#define ALSOUNDEMITTER_HPP
+#ifndef AL_SOUND_EMITTER_HPP
+#define AL_SOUND_EMITTER_HPP
 
-#include <map>
 #include "ALSoundBase.hpp"
 #include "ALSource.hpp"
 
@@ -10,7 +9,7 @@ namespace audio
 namespace newapi
 {
 
-class AudioEmitter : public AudioEmitterBase
+class AudioEmitter : public ALSource, public AudioEmitterBase
 {
 public:
 
@@ -30,6 +29,7 @@ public:
     void setVolume(float &volume);
     void setGain(const float &gain);
     void setLoop(const bool loop);
+    void setPitch(const float pitch);
 
     /// The distance under which the volume for the source
     /// would normally drop by half
@@ -53,16 +53,17 @@ public:
     /// the listener default is false
     void enableRelativeListener(bool relative);
 
+    /// Play sound from emmitter
     void play();
+
+    /// Stop sound from emitter
     void stop();
+
+    /// Pause sound from emitter
     void pause();
 
-    /// Return state emitter (played, stopped, paused).
+    /// Return state sound in emitter (played, stopped, paused).
     ALuint getState();
-
-    void setPriority(float &volume) { m_volume = volume; }
-    bool is2DSound() { return m_is2DSound;}
-    bool is3DSound() { return m_is3DSound;}
 
 private:
 
@@ -72,8 +73,6 @@ private:
 
     bool m_loop;
     bool m_isRelative;
-    bool m_is2DSound;
-    bool m_is3DSound;
     bool m_relative;
 
     float m_volume;
@@ -82,8 +81,8 @@ private:
     float m_maxGain;
     float m_minDistance;
     float m_maxDistance;
+    float m_pitch;
 
-    std::unique_ptr<AudioSource> m_source;
     std::unique_ptr<AudioPropertiesBase> m_properties;
 };
 

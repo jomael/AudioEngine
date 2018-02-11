@@ -42,4 +42,5 @@ HEADERS += \
     al2/ALUtil.hpp \
     al2/ALSource.hpp \
     al2/ALSoundEmitter.hpp \
-    al2/ALListener.hpp
+    al2/ALListener.hpp \
+    openglbacked.hpp

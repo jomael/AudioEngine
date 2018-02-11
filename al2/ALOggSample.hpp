@@ -1,5 +1,5 @@
-#ifndef ALOGGSAMPLE_H
-#define ALOGGSAMPLE_H
+#ifndef AL_OGG_SAMPLE_H
+#define AL_OGG_SAMPLE_H
 
 #include "ALBuffer.hpp"
 #include "ALSoundBase.hpp"

@@ -1,5 +1,5 @@
-#ifndef ALUTIL_HPP
-#define ALUTIL_HPP
+#ifndef AL_UTIL_HPP
+#define AL_UTIL_HPP
 
 #include <memory>
 #include "ALBackend.hpp"

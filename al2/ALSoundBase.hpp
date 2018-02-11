@@ -1,5 +1,5 @@
-#ifndef ALSOUNDBASE_HPP
-#define ALSOUNDBASE_HPP
+#ifndef AL_SOUND_BASE_HPP
+#define AL_SOUND_BASE_HPP
 
 #include <iostream>
 #include <glm/glm.hpp>
@@ -38,14 +38,10 @@ public:
     AudioEmitterBase() { }
     virtual ~AudioEmitterBase() { }
 
-    virtual bool is2DSound() = 0;
-    virtual bool is3DSound() = 0;
     virtual void setPosition(const glm::vec3 &position) = 0;
     virtual void setVelocity(const glm::vec3 &velocity) = 0;
     virtual void setDirection(const glm::vec3 &direction) = 0;
     virtual void setVolume(float &volume) = 0;
-    virtual void setPriority(float &volume) = 0;
-    //virtual void setStop(bool &stop) = 0;
     virtual void setLoop(bool loop) = 0;
 };
 

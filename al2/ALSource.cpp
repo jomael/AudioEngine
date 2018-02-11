@@ -5,19 +5,19 @@ namespace audio
 namespace newapi
 {
 
-AudioSource::AudioSource() : m_source(0)
+ALSource::ALSource() : m_source(0)
 {
     alGenSources(1, &m_source);
     LOG("Generated source");
 }
 
-AudioSource::~AudioSource()
+ALSource::~ALSource()
 {
     alDeleteSources(1, &m_source);
     LOG("Deleted source");
 }
 
-void AudioSource::create(const std::string &path)
+void ALSource::createSource(const std::string &path)
 {
     m_sample = createSample(path);
 }
@@ -52,18 +52,13 @@ void AudioSource::setDistanceModel(ALenum model)
     }
 }
 
-void AudioSource::setPitch(float pitch)
-{
-    m_pitch = pitch;
-    alSourcef(m_source, AL_PITCH, m_pitch);
-}
 */
-ALuint AudioSource::getSource()
+ALuint ALSource::getSource()
 {
     return m_source;
 }
 
-ALuint AudioSource::getSampleBuffer()
+ALuint ALSource::getSampleBuffer()
 {
     return m_sample->getBuffer();
 }

@@ -1,5 +1,5 @@
-#ifndef AUDIOSYSTEM_HPP
-#define AUDIOSYSTEM_HPP
+#ifndef AUDIO_SYSTEM_HPP
+#define AUDIO_SYSTEM_HPP
 
 #include <memory>
 #include <vector>

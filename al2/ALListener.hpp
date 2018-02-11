@@ -1,5 +1,5 @@
-#ifndef ALLISTENER_HPP
-#define ALLISTENER_HPP
+#ifndef AL_LISTENER_HPP
+#define AL_LISTENER_HPP
 
 #include "ALSoundBase.hpp"
 #include "utils/Log.hpp"

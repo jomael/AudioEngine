@@ -1,5 +1,5 @@
-#ifndef ALWAVSAMPLE_H
-#define ALWAVSAMPLE_H
+#ifndef AL_WAV_SAMPLE_H
+#define AL_WAV_SAMPLE_H
 
 #include <iostream>
 #include <fstream>

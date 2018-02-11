@@ -1,5 +1,5 @@
-#ifndef ALBUFFER_HPP
-#define ALBUFFER_HPP
+#ifndef AL_BUFFER_HPP
+#define AL_BUFFER_HPP
 
 #include "ALBackend.hpp"
 

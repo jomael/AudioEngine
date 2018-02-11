@@ -24,11 +24,10 @@ AudioEmitter::~AudioEmitter()
 
 void AudioEmitter::create(const std::string &path)
 {
-    m_source = std::make_unique<AudioSource>();
     m_properties = std::make_unique<AudioPropertiesBase>();
-    m_source->create(path);
-    m_properties->idBuffer = m_source->getSampleBuffer();
-    m_properties->idSource = m_source->getSource();
+    createSource(path);
+    m_properties->idBuffer = getSampleBuffer();
+    m_properties->idSource = getSource();
 
     alSourcei(m_properties->idSource,
               AL_BUFFER, static_cast<ALint>(m_properties->idBuffer));
@@ -103,6 +102,12 @@ void AudioEmitter::setLoop(bool loop)
 {
     m_loop = loop;
     alSourcei(m_properties->idSource, AL_LOOPING, loop);
+}
+
+void AudioEmitter::setPitch(const float pitch)
+{
+    m_pitch = pitch;
+    alSourcef(m_properties->idSource, AL_PITCH, m_pitch);
 }
 
 void AudioEmitter::setMinMaxDistance(const float &min, const float &max)
