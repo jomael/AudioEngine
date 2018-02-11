@@ -4,7 +4,7 @@
 #include "ALBuffer.hpp"
 #include "ALSoundBase.hpp"
 #include "ALUtil.hpp"
-#include "utils/Log.hpp"
+#include "util/Log.hpp"
 
 namespace audio
 {

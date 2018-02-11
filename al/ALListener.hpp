@@ -2,7 +2,7 @@
 #define AL_LISTENER_HPP
 
 #include "ALSoundBase.hpp"
-#include "utils/Log.hpp"
+#include "util/Log.hpp"
 
 namespace audio
 {

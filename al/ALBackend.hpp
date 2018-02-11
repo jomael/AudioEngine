@@ -8,8 +8,8 @@
 #include <AL/alc.h>
 #include <AL/alext.h>
 
-#include "utils/Log.hpp"
-#include "utils/Singleton.hpp"
+#include "util/Log.hpp"
+#include "util/Singleton.hpp"
 
 namespace audio
 {

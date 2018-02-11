@@ -6,7 +6,7 @@
 #include <AL/alc.h>
 #include <memory>
 #include "ALUtil.hpp"
-#include "utils/Log.hpp"
+#include "util/Log.hpp"
 
 namespace audio
 {

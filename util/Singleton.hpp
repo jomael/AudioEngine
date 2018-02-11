@@ -1,9 +1,9 @@
 #ifndef SINGLETON_HPP
 #define SINGLETON_HPP
 
-#include "utils/Error.hpp"
-#include "utils/Exception.hpp"
-#include "utils/NonCopyable.hpp"
+#include "util/Error.hpp"
+#include "util/Exception.hpp"
+#include "util/NonCopyable.hpp"
 
 /**
 * Base class for classes that only exist in one instance.

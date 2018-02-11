@@ -6,7 +6,7 @@
 #include "ALSoundBase.hpp"
 #include "ALOggSample.hpp"
 #include "ALWavSample.hpp"
-#include "utils/Exception.hpp"
+#include "util/Exception.hpp"
 
 namespace audio
 {

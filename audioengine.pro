@@ -7,9 +7,9 @@ CONFIG -= qt
 LIBS += -lglfw3 -lGL -lGLEW -lm -lXrandr -lXi -lX11 -lXxf86vm -lpthread -lopenal
 
 SOURCES += \
-    utils/Error.cpp \
-    utils/Log.cpp \
-    utils/StringUtils.cpp \
+    util/Error.cpp \
+    util/Log.cpp \
+    util/StringUtils.cpp \
     main.cpp \
     stb_vorbis.c \
     al/ALBackend.cpp \
@@ -26,13 +26,13 @@ SOURCES += \
 HEADERS += \
     stb_image.h \
     stb_vorbis.h \
-    utils/Debug.hpp \
-    utils/Error.hpp \
-    utils/Exception.hpp \
-    utils/Log.hpp \
-    utils/NonCopyable.hpp \
-    utils/Singleton.hpp \
-    utils/StringUtils.hpp \
+    util/Debug.hpp \
+    util/Error.hpp \
+    util/Exception.hpp \
+    util/Log.hpp \
+    util/NonCopyable.hpp \
+    util/Singleton.hpp \
+    util/StringUtils.hpp \
     al/ALSoundBase.hpp \
     al/ALBackend.hpp \
     al/ALBuffer.hpp \
