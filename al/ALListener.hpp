@@ -1,20 +1,30 @@
-#ifndef ALLISTENER_HPP
-#define ALLISTENER_HPP
+#ifndef AL_LISTENER_HPP
+#define AL_LISTENER_HPP
 
-#include "ALPositionSource.hpp"
+#include "ALSoundBase.hpp"
+#include "utils/Log.hpp"
 
 namespace audio
 {
 namespace al
 {
 
-class Listener : public PositionSource
+class AudioListenerSettings
 {
+public:
+    const glm::vec3 defaultPosition = glm::vec3(0.0f, 0.0f, 0.0f);
+    const glm::vec3 defaultVelocity = glm::vec3(0.0f, 0.0f, 0.0f);
+    const glm::vec3 defaultDirection = glm::vec3(0.f, 0.f, -1.f);
+    const glm::vec3 defaultUpVector = glm::vec3(0.f, 1.f, 0.1f);
+};
 
+class AudioListener
+{
 public:
 
-    Listener();
-    virtual ~Listener();
+    explicit AudioListener();
+    explicit AudioListener(AudioListenerSettings &audiosettings);
+    virtual ~AudioListener();
 
     /// Set vector position listener
     void setPosition(const glm::vec3 &position);
@@ -29,27 +39,21 @@ public:
     void setDirection(const float &x, const float &y, const float &z);
 
     /// Get vector position listener
-    glm::vec3 getPosition();
+    glm::vec3 getPosition() const;
 
     /// Get vector velocity listener
-    glm::vec3 getVelocity();
+    glm::vec3 getVelocity() const;
 
     /// Update every second position and direction listener
-    void updateListenerPosition(const glm::vec3 &pos, const glm::vec3 &dir);
+    void updateListener(const glm::vec3 &pos, const glm::vec3 &dir);
 
 private:
 
-    /// Position listener in 3d space
     glm::vec3 m_position;
-
-    /// Velocity listener in 3d space
     glm::vec3 m_velocity;
-
-    /// Direction listener in 3d space
     glm::vec3 m_direction;
-
-    /// Up vector listener in 3d space
     glm::vec3 m_up_vector;
+    AudioListenerSettings m_audioSettings;
 };
 
 } // namespace audio::al

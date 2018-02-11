@@ -1,8 +1,7 @@
-#ifndef ALBUFFER_HPP
-#define ALBUFFER_HPP
+#ifndef AL_BUFFER_HPP
+#define AL_BUFFER_HPP
 
-#include "ALDevice.hpp"
-#include "ALError.hpp"
+#include "ALBackend.hpp"
 
 namespace audio
 {
@@ -11,16 +10,15 @@ namespace al
 
 /// Class initialize OpenAL device only one and
 /// generate for every sound buffer id.
-class Buffer
+class ALBuffer
 {
 public:
 
-    /// Default constructor.
-    Buffer();
-    virtual ~Buffer();
+    ALBuffer();
+    virtual ~ALBuffer();
 
     // Gets actual buffer id.
-    ALuint getBuffer();
+    ALuint getBuffer() const;
 
 public:
 
