@@ -7,8 +7,8 @@
 
 #include "openglbacked.hpp"
 
-#include "al2/AudioSystem.hpp"
-#include "al2/ALListener.hpp"
+#include "al/AudioSystem.hpp"
+#include "al/ALListener.hpp"
 
 audio::al::AudioSystem *g_audioSystem = nullptr;
 audio::al::AudioListener *g_audioListener = nullptr;

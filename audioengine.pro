@@ -12,15 +12,15 @@ SOURCES += \
     utils/StringUtils.cpp \
     main.cpp \
     stb_vorbis.c \
-    al2/AudioSystem.cpp \
-    al2/ALBackend.cpp \
-    al2/ALBuffer.cpp \
-    al2/ALOggSample.cpp \
-    al2/ALWavSample.cpp \
-    al2/ALUtil.cpp \
-    al2/ALSource.cpp \
-    al2/ALSoundEmitter.cpp \
-    al2/ALListener.cpp
+    al/AudioSystem.cpp \
+    al/ALBackend.cpp \
+    al/ALBuffer.cpp \
+    al/ALOggSample.cpp \
+    al/ALWavSample.cpp \
+    al/ALUtil.cpp \
+    al/ALSource.cpp \
+    al/ALSoundEmitter.cpp \
+    al/ALListener.cpp
     main.cpp \
 
 HEADERS += \
@@ -33,14 +33,14 @@ HEADERS += \
     utils/NonCopyable.hpp \
     utils/Singleton.hpp \
     utils/StringUtils.hpp \
-    al2/AudioSystem.hpp \
-    al2/ALSoundBase.hpp \
-    al2/ALBackend.hpp \
-    al2/ALBuffer.hpp \
-    al2/ALOggSample.hpp \
-    al2/ALWavSample.hpp \
-    al2/ALUtil.hpp \
-    al2/ALSource.hpp \
-    al2/ALSoundEmitter.hpp \
-    al2/ALListener.hpp \
+    al/AudioSystem.hpp \
+    al/ALSoundBase.hpp \
+    al/ALBackend.hpp \
+    al/ALBuffer.hpp \
+    al/ALOggSample.hpp \
+    al/ALWavSample.hpp \
+    al/ALUtil.hpp \
+    al/ALSource.hpp \
+    al/ALSoundEmitter.hpp \
+    al/ALListener.hpp \
     openglbacked.hpp
