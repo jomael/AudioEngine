@@ -2,7 +2,7 @@
 
 namespace audio
 {
-namespace newapi
+namespace al
 {
 
 AudioListener::AudioListener() : m_position(0.0f, 0.0f, 0.0f),

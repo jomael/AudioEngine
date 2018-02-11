@@ -13,7 +13,7 @@
 
 namespace audio
 {
-namespace newapi
+namespace al
 {
 
 /// OpenAL audio backend. Class initialize

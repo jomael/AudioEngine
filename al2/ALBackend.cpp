@@ -2,7 +2,7 @@
 
 namespace audio
 {
-namespace newapi
+namespace al
 {
 
 OpenALBackend::OpenALBackend() : m_isInitialized(false)

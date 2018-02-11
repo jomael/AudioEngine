@@ -8,7 +8,7 @@
 
 namespace audio
 {
-namespace newapi
+namespace al
 {
 
 /// Class represent load ogg files and decode ogg files.

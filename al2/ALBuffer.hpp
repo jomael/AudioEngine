@@ -5,7 +5,7 @@
 
 namespace audio
 {
-namespace newapi
+namespace al
 {
 
 /// Class initialize OpenAL device only one and

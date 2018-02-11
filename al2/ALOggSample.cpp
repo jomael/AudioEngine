@@ -5,7 +5,7 @@
 
 namespace audio
 {
-namespace newapi
+namespace al
 {
 
 OggSample::OggSample() : m_channels(0), m_sampleRate(0.0), m_error(0)

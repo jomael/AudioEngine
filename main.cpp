@@ -10,27 +10,36 @@
 #include "al2/AudioSystem.hpp"
 #include "al2/ALListener.hpp"
 
-audio::newapi::AudioSystem *g_audioSystem = nullptr;
-audio::newapi::AudioListener *g_audioListener = nullptr;
+audio::al::AudioSystem *g_audioSystem = nullptr;
+audio::al::AudioListener *g_audioListener = nullptr;
 
 void loadAudio()
 {
-    g_audioSystem = new audio::newapi::AudioSystem();
-    g_audioListener = new audio::newapi::AudioListener();
+    g_audioSystem = new audio::al::AudioSystem();
+    g_audioListener = new audio::al::AudioListener();
     g_audioSystem->loadFromFile("wind", "resources/wind.ogg");
     g_audioSystem->loadFromFile("thunder","resources/thunder2_mono.wav");
 }
 
 void playAudio()
 {
-    std::shared_ptr<audio::newapi::AudioEmitter> emitter1 = g_audioSystem->getEmitter("thunder");
-    emitter1->enableRelativeListener(false);
-    emitter1->setPosition(5.0f, 5.0f, 5.0f);
-    emitter1->setDirection(0.0f, 0.0f, 0.0f);
-    emitter1->setMinMaxDistance(0.0f, 0.2f);
-    emitter1->setGain(8.0f);
-    emitter1->setLoop(true);
-    emitter1->play();
+    std::shared_ptr<audio::al::AudioEmitter> em1 = g_audioSystem->getEmitter("thunder");
+    em1->enableRelativeListener(false);
+    em1->setPosition(5.0f, 5.0f, 5.0f);
+    em1->setDirection(0.0f, 0.0f, 0.0f);
+    em1->setMinMaxDistance(0.0f, 0.2f);
+    em1->setGain(5.0f);
+    em1->setLoop(true);
+    em1->play();
+
+    std::shared_ptr<audio::al::AudioEmitter> em2 = g_audioSystem->getEmitter("wind");
+    em2->enableRelativeListener(true);
+    em2->setPosition(5.0f, 5.0f, 5.0f);
+    em2->setDirection(0.0f, 0.0f, 0.0f);
+    em2->setMinMaxDistance(0.0f, 0.2f);
+    em2->setGain(8.0f);
+    em2->setLoop(true);
+    em2->play();
 }
 
 void cleanupAudio()
@@ -130,7 +139,7 @@ int main(void)
     shader.setUniformInt("texture1", 0);
 
     std::vector<glm::vec3> randomPosition;
-    //randomPosition.push_back(glm::vec3(5.0f, 10.0f, 5.0f));
+    randomPosition.push_back(glm::vec3(5.0f, 10.0f, 5.0f));
     //randomPosition.push_back(glm::vec3(0.0f, 0.0f, 5.0f));
     randomPosition.push_back(glm::vec3(5.0f, 5.0f, 5.0f));
     /*for(int i = 0; i < 20; i++)

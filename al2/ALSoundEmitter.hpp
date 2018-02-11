@@ -6,7 +6,7 @@
 
 namespace audio
 {
-namespace newapi
+namespace al
 {
 
 class AudioEmitter : public ALSource, public AudioEmitterBase
@@ -19,6 +19,7 @@ public:
     /// Create source emitter from audio file
     void create(const std::string &path);
 
+    //void setSettings(AudioSystemSettings &settings);
     void setPosition(const glm::vec3 &position);
     void setPosition(const float &x, const float &y, const float &z);
     void setVelocity(const glm::vec3 &velocity);

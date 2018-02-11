@@ -2,16 +2,10 @@
 
 namespace audio
 {
-namespace newapi
+namespace al
 {
 
 AudioSystem::AudioSystem()
-{
-    LOG("Constructor");
-}
-
-AudioSystem::AudioSystem(AudioSystemSettings &settings) :
-    m_settings(settings)
 {
     LOG("Constructor");
 }
@@ -42,11 +36,11 @@ std::shared_ptr<AudioEmitter> AudioSystem::getEmitter(const std::string &name)
     auto source = m_emitters.find(name);
     if(source != m_emitters.end())
     {
-         return source->second;
+        return source->second;
     }
 
     Throw(InvalidArgument,
-        strprintf("Cannot for audio emitters according to key (name) '%s'", name.c_str()));
+          strprintf("Cannot for audio emitters according to key (name) '%s'", name.c_str()));
 }
 
 } // namespace audio::al

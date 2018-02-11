@@ -10,14 +10,14 @@
 
 namespace audio
 {
-namespace newapi
+namespace al
 {
 
 ALint getFormatNumChannels(ALuint channels);
-
 std::unique_ptr<AudioSampleBase> createSample(const std::string &path);
+void setDistanceModel(ALenum model);
 
-} // namespace audio::newapi
+} // namespace audio::al
 } // namespace al
 
 #endif

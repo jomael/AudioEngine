@@ -6,7 +6,7 @@
 
 namespace audio
 {
-namespace newapi
+namespace al
 {
 
 class AudioListenerSettings

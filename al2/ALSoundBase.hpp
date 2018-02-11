@@ -5,6 +5,25 @@
 #include <glm/glm.hpp>
 #include <AL/al.h>
 
+/// Collects various settings of the audio system.
+/*class AudioSystemSettings
+{
+public:
+
+    /// Default value for every sound.
+    const float master_gain = 1.0f;
+
+    /// Default listener gain.
+    const float default_listener_gain = 1.0f;
+
+    /// Doppler factor is a simple scaling of source and listener velocities
+    /// to exaggerate or deemphasize the Doppler (pitch).
+    const float doppler_factor = 1.0f;
+
+    /// Default value for speed of sound for every sound.
+    const float speed_of_sound = 343.3f;
+};*/
+
 class AudioSampleBase
 {
 public:

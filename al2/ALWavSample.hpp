@@ -12,7 +12,7 @@
 
 namespace audio
 {
-namespace newapi
+namespace al
 {
 
 /// Wave files have a master RIFF chunk which includes a

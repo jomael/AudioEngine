@@ -2,7 +2,7 @@
 
 namespace audio
 {
-namespace newapi
+namespace al
 {
 
 WavSample::WavSample() : m_channels(0), m_sampleRate(0),

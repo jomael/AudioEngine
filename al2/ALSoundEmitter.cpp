@@ -2,7 +2,7 @@
 
 namespace audio
 {
-namespace newapi
+namespace al
 {
 
 AudioEmitter::AudioEmitter():

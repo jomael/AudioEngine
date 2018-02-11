@@ -2,7 +2,7 @@
 
 namespace audio
 {
-namespace newapi
+namespace al
 {
 
 ALBuffer::ALBuffer() : m_buffer(0)
