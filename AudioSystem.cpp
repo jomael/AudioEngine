@@ -5,52 +5,42 @@ namespace audio
 namespace al
 {
 
-AudioSystem::AudioSystem() :
-    m_listener_gain(m_settings.default_listener_gain),
-    m_sound_gain(m_settings.master_gain),
-    m_doppler_factor(m_settings.doppler_factor),
-    m_speed_of_sound(m_settings.speed_of_sound)
+AudioSystem::AudioSystem()
 {
-
-}
-
-AudioSystem::AudioSystem(const AudioSystemSettings &settings) :
-    m_listener_gain(m_settings.default_listener_gain),
-    m_sound_gain(settings.master_gain),
-    m_doppler_factor(settings.doppler_factor),
-    m_speed_of_sound(settings.speed_of_sound)
-{
-
+    LOG("Constructor");
 }
 
 AudioSystem::~AudioSystem()
 {
-
+    LOG("Destructor");
 }
 
-void AudioSystem::loadFromFile(const std::string &name, const std::string &file)
+void AudioSystem::loadFromFile(const std::string &name, const std::string &path)
 {
-   if(!file.empty())
-   {
-       std::shared_ptr<Source> source = std::make_shared<Source>();
-       source->loadFromFile(file);
-       m_decoded_sources.insert(std::pair<std::string, std::shared_ptr<Source>>(name, source));
-   }
-   else
-   {
-       std::cout << "File path is empty!" << std::endl;
-   }
-}
-
-std::shared_ptr<Source> AudioSystem::getSource(const std::string &name)
-{
-    auto found_source = m_decoded_sources.find(name);
-    if(found_source != m_decoded_sources.end())
+    if(!path.empty())
     {
-        return found_source->second;
+        std::shared_ptr<AudioEmitter> e = std::make_shared<AudioEmitter>();
+        e->create(path);
+
+        m_emitters.insert(std::pair<std::string,
+                          std::shared_ptr<AudioEmitter>>(name, e));
     }
-    std::cout << "Invalid source , source not found." << std::endl;
-    return NULL;
+    else
+    {
+        LOG("Path for audio file is empty!");
+    }
+}
+
+std::shared_ptr<AudioEmitter> AudioSystem::getEmitter(const std::string &name)
+{
+    auto source = m_emitters.find(name);
+    if(source != m_emitters.end())
+    {
+        return source->second;
+    }
+
+    Throw(InvalidArgument,
+          strprintf("Cannot for audio emitters according to key (name) '%s'", name.c_str()));
 }
 
 } // namespace audio::al

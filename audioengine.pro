@@ -12,7 +12,6 @@ SOURCES += \
     utils/StringUtils.cpp \
     main.cpp \
     stb_vorbis.c \
-    al/AudioSystem.cpp \
     al/ALBackend.cpp \
     al/ALBuffer.cpp \
     al/ALOggSample.cpp \
@@ -20,7 +19,8 @@ SOURCES += \
     al/ALUtil.cpp \
     al/ALSource.cpp \
     al/ALSoundEmitter.cpp \
-    al/ALListener.cpp
+    al/ALListener.cpp \
+    AudioSystem.cpp
     main.cpp \
 
 HEADERS += \
@@ -33,7 +33,6 @@ HEADERS += \
     utils/NonCopyable.hpp \
     utils/Singleton.hpp \
     utils/StringUtils.hpp \
-    al/AudioSystem.hpp \
     al/ALSoundBase.hpp \
     al/ALBackend.hpp \
     al/ALBuffer.hpp \
@@ -43,4 +42,5 @@ HEADERS += \
     al/ALSource.hpp \
     al/ALSoundEmitter.hpp \
     al/ALListener.hpp \
-    openglbacked.hpp
+    openglbacked.hpp \
+    AudioSystem.hpp
