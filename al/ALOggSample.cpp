@@ -45,6 +45,7 @@ OggSample::OggSample(const std::string &path) : m_channels(0), m_sampleRate(0.0)
 
     alBufferData(m_buffer, static_cast<ALenum>(format),
                  data, static_cast<ALsizei>(sizeof(short) * samples * m_channels), static_cast<ALsizei>(m_sampleRate));
+    free(data);
 }
 
 OggSample::~OggSample()
