@@ -19,11 +19,9 @@ void AudioSystem::loadFromFile(const std::string &name, const std::string &path)
 {
     if(!path.empty())
     {
-        std::shared_ptr<AudioEmitter> e = std::make_shared<AudioEmitter>();
-        e->create(path);
-
-        m_emitters.insert(std::pair<std::string,
-                          std::shared_ptr<AudioEmitter>>(name, e));
+        std::shared_ptr<AudioEmitter> emitter = std::make_shared<AudioEmitter>();
+        emitter->create(path);
+        m_emitters.emplace(name, emitter);
     }
     else
     {

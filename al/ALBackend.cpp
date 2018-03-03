@@ -17,8 +17,7 @@ OpenALBackend::OpenALBackend() : m_isInitialized(false)
         }
         else
         {
-            const char *device = alcGetString(m_device, ALC_DEVICE_SPECIFIER);
-            LOG("OpenAL device   : " + std::string(device));
+            LOG("OpenAL device   : " + std::string(alcGetString(m_device, ALC_DEVICE_SPECIFIER)));
 
         }
 
@@ -36,15 +35,11 @@ OpenALBackend::OpenALBackend() : m_isInitialized(false)
         }
         else
         {
-            const char *version = alGetString(AL_VERSION);
-            const char *renderer = alGetString(AL_RENDERER);
-            const char *vendor = alGetString(AL_VENDOR);
-            const char *extension = alGetString(AL_EXTENSIONS);
 
-            LOG("OpenAL version   : " + std::string(version));
-            LOG("OpenAL renderer  : " + std::string(renderer));
-            LOG("OpenAL vendor    : " + std::string(vendor));
-            LOG("OpenAL extension : " + std::string(extension));
+            LOG("OpenAL version   : " + std::string(alGetString(AL_VERSION)));
+            LOG("OpenAL renderer  : " + std::string(alGetString(AL_RENDERER)));
+            LOG("OpenAL vendor    : " + std::string(alGetString(AL_VENDOR)));
+            LOG("OpenAL extension : " + std::string(alGetString(AL_EXTENSIONS)));
             LOG("OpenAL init done");
         }
         m_isInitialized = true;

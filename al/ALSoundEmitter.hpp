@@ -84,7 +84,8 @@ private:
     float m_maxDistance;
     float m_pitch;
 
-    std::unique_ptr<AudioPropertiesBase> m_properties;
+    ALuint m_idBuffer;
+    ALuint m_idSource;
 };
 
 } // namespace audio::al

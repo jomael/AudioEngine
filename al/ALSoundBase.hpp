@@ -37,7 +37,7 @@ public:
     //virtual int sizeofBytes() const = 0;
     virtual ALuint getBuffer() const = 0;
 };
-
+/*
 struct AudioPropertiesBase
 {
     glm::vec3 position = glm::vec3(0.0f,0.0f,0.0f);
@@ -49,7 +49,7 @@ struct AudioPropertiesBase
     ALuint idSource = 0;
     ALuint idBuffer = 0;
 };
-
+*/
 class AudioEmitterBase
 {
 public:

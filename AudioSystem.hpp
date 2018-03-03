@@ -2,13 +2,12 @@
 #define AUDIO_SYSTEM_HPP
 
 #include <memory>
-#include <unordered_map>
+#include <map>
 #include <iostream>
 
 #include "al/ALBackend.hpp"
 #include "al/ALSoundEmitter.hpp"
 #include "al/ALListener.hpp"
-
 
 namespace audio
 {
@@ -31,7 +30,7 @@ public:
 
 protected:
 
-    std::unordered_map<std::string, std::shared_ptr<AudioEmitter>> m_emitters;
+    std::map<std::string, std::shared_ptr<AudioEmitter>> m_emitters;
 };
 
 } // namespace audio::al
