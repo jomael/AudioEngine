@@ -3,6 +3,8 @@ CONFIG += c++14
 CONFIG += console
 CONFIG -= app_bundle
 CONFIG -= qt
+#QMAKE_CXXFLAGS+= -fsanitize=address -fsanitize=leak -fno-omit-frame-pointer
+#QMAKE_CXXFLAGS+= -fsanitize=safe-stack -fno-omit-frame-pointer
 
 LIBS += -lglfw3 -lGL -lGLEW -lm -lXrandr -lXi -lX11 -lXxf86vm -lpthread -lopenal
 

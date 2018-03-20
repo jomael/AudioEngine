@@ -13,11 +13,8 @@ class AudioEmitter : public ALSource, public AudioEmitterBase
 {
 public:
 
-    AudioEmitter();
+    AudioEmitter(const std::string &path);
     virtual ~AudioEmitter();
-
-    /// Create source emitter from audio file
-    void create(const std::string &path);
 
     //void setSettings(AudioSystemSettings &settings);
     void setPosition(const glm::vec3 &position);

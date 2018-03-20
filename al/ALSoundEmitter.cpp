@@ -5,7 +5,7 @@ namespace audio
 namespace al
 {
 
-AudioEmitter::AudioEmitter():
+AudioEmitter::AudioEmitter(const std::string &path):
     m_position(0.0f, 0.0f, 0.0f),
     m_velocity(0.0f, 0.0f, 0.0f),
     m_direction(0.0f, 0.0f, 0.0f),
@@ -17,26 +17,24 @@ AudioEmitter::AudioEmitter():
     m_idSource(0)
 {
     LOG("Constructor");
-}
 
-AudioEmitter::~AudioEmitter()
-{
-    LOG("Destructor");
-}
-
-void AudioEmitter::create(const std::string &path)
-{
     createSource(path);
     m_idBuffer = getSampleBuffer();
     m_idSource = getSource();
 
     alSourcei(m_idSource,
-              AL_BUFFER, static_cast<ALint>(m_idBuffer));
+              AL_BUFFER,
+              static_cast<ALint>(m_idBuffer));
 
     if(AL_NO_ERROR != alGetError())
     {
         LOG("OpenAL error");
     }
+}
+
+AudioEmitter::~AudioEmitter()
+{
+    LOG("Destructor");
 }
 
 void AudioEmitter::setPosition(const glm::vec3 &position)

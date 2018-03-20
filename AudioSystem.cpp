@@ -17,24 +17,22 @@ AudioSystem::~AudioSystem()
 
 void AudioSystem::loadFromFile(const std::string &name, const std::string &path)
 {
-    if(!path.empty())
+    if(path.empty())
     {
-        std::shared_ptr<AudioEmitter> emitter = std::make_shared<AudioEmitter>();
-        emitter->create(path);
-        m_emitters.emplace(name, emitter);
+        Throw(InvalidArgument,
+              strprintf("File path is empty! '%s'", name.c_str()));
     }
-    else
-    {
-        LOG("Path for audio file is empty!");
-    }
+
+    std::shared_ptr<AudioEmitter> emitter = std::make_shared<AudioEmitter>(path);
+    m_emitters.emplace(name, emitter);
 }
 
 std::shared_ptr<AudioEmitter> AudioSystem::getEmitter(const std::string &name)
 {
-    auto source = m_emitters.find(name);
-    if(source != m_emitters.end())
+    if(m_emitters.count(name) > 0)
     {
-        return source->second;
+        auto s = m_emitters.find(name);
+        return s->second;
     }
 
     Throw(InvalidArgument,
