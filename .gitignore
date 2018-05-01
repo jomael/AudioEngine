@@ -33,3 +33,6 @@
 
 
 *.pro.user
+/Makefile
+/.qmake.stash
+/audioengine

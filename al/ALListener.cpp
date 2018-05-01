@@ -5,42 +5,54 @@ namespace audio
 namespace al
 {
 
-Listener::Listener() : m_position(0.0f, 0.0f, 0.0f), m_velocity(0.0f, 0.0f, 0.0f),
-    m_direction(0.f, 0.f, -1.f), m_up_vector(0.f, 1.f, 0.1f)
+AudioListener::AudioListener() : m_position(0.0f, 0.0f, 0.0f),
+    m_velocity(0.0f, 0.0f, 0.0f), m_direction(0.f, 0.f, -1.f),
+    m_up_vector(0.f, 1.f, 0.1f)
 {
-    LOG("OpenAL listener init done");
+
 }
 
-Listener::~Listener()
+AudioListener::AudioListener(AudioListenerSettings &audiosettings)
+    : m_audioSettings(audiosettings)
 {
-    LOG("Destroy openal listener");
+    m_position = audiosettings.defaultPosition;
+    m_velocity = audiosettings.defaultVelocity;
+    m_direction = audiosettings.defaultDirection;
+    m_up_vector = audiosettings.defaultUpVector;
+
+    LOG("Constructor");
 }
 
-void Listener::setPosition(const glm::vec3 &position)
+AudioListener::~AudioListener()
+{
+    LOG("Destructor");
+}
+
+void AudioListener::setPosition(const glm::vec3 &position)
 {
     m_position = position;
     alListener3f(AL_POSITION, m_position.x, m_position.y, m_position.z);
 }
 
-void Listener::setPosition(const float &x, const float &y, const float &z)
+void AudioListener::setPosition(const float &x, const float &y, const float &z)
 {
     m_position = glm::vec3(x, y, z);
     alListener3f(AL_POSITION, m_position.x, m_position.y, m_position.z);
 }
 
-void Listener::setVelocity(const glm::vec3 &velocity)
+void AudioListener::setVelocity(const glm::vec3 &velocity)
 {
     m_velocity = velocity;
     alListener3f(AL_VELOCITY, m_velocity.x, m_velocity.y, m_velocity.z);
 }
 
-void Listener::setVelocity(const float &x, const float &y, const float &z)
+void AudioListener::setVelocity(const float &x, const float &y, const float &z)
 {
     m_velocity = glm::vec3(x, y, z);
     alListener3f(AL_VELOCITY, m_velocity.x, m_velocity.y, m_velocity.z);
 }
 
-void Listener::setDirection(const glm::vec3 &direction)
+void AudioListener::setDirection(const glm::vec3 &direction)
 {
     m_direction = direction;
 
@@ -52,7 +64,7 @@ void Listener::setDirection(const glm::vec3 &direction)
     alListenerfv(AL_ORIENTATION, orientation);
 }
 
-void Listener::setDirection(const float &x, const float &y, const float &z)
+void AudioListener::setDirection(const float &x, const float &y, const float &z)
 {
     m_direction = glm::vec3(x, y, z);
 
@@ -64,7 +76,7 @@ void Listener::setDirection(const float &x, const float &y, const float &z)
     alListenerfv(AL_ORIENTATION, orientation);
 }
 
-void Listener::updateListenerPosition(const glm::vec3 &pos, const glm::vec3 &dir)
+void AudioListener::updateListener(const glm::vec3 &pos, const glm::vec3 &dir)
 {
     m_position = pos;
     m_direction = dir;
@@ -78,12 +90,12 @@ void Listener::updateListenerPosition(const glm::vec3 &pos, const glm::vec3 &dir
     alListenerfv(AL_ORIENTATION, orientation);
 }
 
-glm::vec3 Listener::getPosition()
+glm::vec3 AudioListener::getPosition() const
 {
     return m_position;
 }
 
-glm::vec3 Listener::getVelocity()
+glm::vec3 AudioListener::getVelocity() const
 {
     return m_velocity;
 }

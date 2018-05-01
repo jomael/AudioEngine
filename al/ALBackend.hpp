@@ -1,5 +1,5 @@
-#ifndef ALDEVICE_HPP
-#define ALDEVICE_HPP
+#ifndef OPENAL_BACKEND_HPP
+#define OPENAL_BACKEND_HPP
 
 #include <iostream>
 #include <glm/glm.hpp>
@@ -8,20 +8,22 @@
 #include <AL/alc.h>
 #include <AL/alext.h>
 
-#include "utils/Log.hpp"
+#include "util/Log.hpp"
+#include "util/Singleton.hpp"
 
 namespace audio
 {
 namespace al
 {
 
-/// OpenAL audio backend. Class initilize openal device and create context.
-class Device
+/// OpenAL audio backend. Class initialize
+/// openal device and create context.
+class OpenALBackend : public Singleton<OpenALBackend>
 {
 public:
 
-    Device();
-    virtual ~Device();
+    explicit OpenALBackend();
+    virtual ~OpenALBackend();
 
     /// Return true if device was initialize.
     bool isInitialized();
@@ -29,17 +31,13 @@ public:
 private:
 
     /// Pointer to ALCdevice structure. NULL is failure.
-    static ALCdevice *m_device;
+    ALCdevice *m_device;
 
     /// Pointer to ALCcontext structure. NULL is failure.
-    static ALCcontext *m_context;
+    ALCcontext *m_context;
 
     /// This flag is for control initialize openal device and context.
-    /// Flag inhibiting for multi initilize openal device and context.
-    static bool m_isInitialized;
-
-    /// Counter count number of initialize.
-    static int m_counter_inits;
+    bool m_isInitialized;
 };
 
 } // namespace audio::al

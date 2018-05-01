@@ -1,12 +1,14 @@
-#ifndef ALWAVSAMPLE_H
-#define ALWAVSAMPLE_H
+#ifndef AL_WAV_SAMPLE_H
+#define AL_WAV_SAMPLE_H
 
 #include <iostream>
 #include <fstream>
 #include <vector>
 #include <string.h>
 
-#include "ALSample.hpp"
+#include "ALBuffer.hpp"
+#include "ALSoundBase.hpp"
+#include "ALUtil.hpp"
 
 namespace audio
 {
@@ -34,13 +36,17 @@ struct WavHeader
     int32_t bytesInData;
 };
 
-class WavSample : public Sample
+class WavSample : public ALBuffer, public AudioSampleBase
 {
 public:
 
     WavSample();
     WavSample(const std::string &path);
     virtual ~WavSample();
+
+    float duration() const { return m_duration; }
+    int numberOfChannel() const   { return m_channels;}
+    ALuint getBuffer() const { return m_buffer;}
 
 private:
 

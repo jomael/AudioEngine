@@ -5,52 +5,38 @@ namespace audio
 namespace al
 {
 
-AudioSystem::AudioSystem() :
-    m_listener_gain(m_settings.default_listener_gain),
-    m_sound_gain(m_settings.master_gain),
-    m_doppler_factor(m_settings.doppler_factor),
-    m_speed_of_sound(m_settings.speed_of_sound)
+AudioSystem::AudioSystem()
 {
-
-}
-
-AudioSystem::AudioSystem(const AudioSystemSettings &settings) :
-    m_listener_gain(m_settings.default_listener_gain),
-    m_sound_gain(settings.master_gain),
-    m_doppler_factor(settings.doppler_factor),
-    m_speed_of_sound(settings.speed_of_sound)
-{
-
+    LOG("Constructor");
 }
 
 AudioSystem::~AudioSystem()
 {
-
+    LOG("Destructor");
 }
 
-void AudioSystem::loadFromFile(const std::string &name, const std::string &file)
+void AudioSystem::loadFromFile(const std::string &name, const std::string &path)
 {
-   if(!file.empty())
-   {
-       std::shared_ptr<Source> source = std::make_shared<Source>();
-       source->loadFromFile(file);
-       m_decoded_sources.insert(std::pair<std::string, std::shared_ptr<Source>>(name, source));
-   }
-   else
-   {
-       std::cout << "File path is empty!" << std::endl;
-   }
-}
-
-std::shared_ptr<Source> AudioSystem::getSource(const std::string &name)
-{
-    auto found_source = m_decoded_sources.find(name);
-    if(found_source != m_decoded_sources.end())
+    if(path.empty())
     {
-        return found_source->second;
+        Throw(InvalidArgument,
+              strprintf("File path is empty! '%s'", name.c_str()));
     }
-    std::cout << "Invalid source , source not found." << std::endl;
-    return NULL;
+
+    std::shared_ptr<AudioEmitter> emitter = std::make_shared<AudioEmitter>(path);
+    m_emitters.emplace(name, emitter);
+}
+
+std::shared_ptr<AudioEmitter> AudioSystem::getEmitter(const std::string &name)
+{
+    if(m_emitters.count(name) > 0)
+    {
+        auto s = m_emitters.find(name);
+        return s->second;
+    }
+
+    Throw(InvalidArgument,
+          strprintf("Cannot for audio emitters according to key (name) '%s'", name.c_str()));
 }
 
 } // namespace audio::al

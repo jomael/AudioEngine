@@ -1,44 +1,48 @@
 TEMPLATE = app
-CONFIG += c++11
+CONFIG += c++14
 CONFIG += console
 CONFIG -= app_bundle
 CONFIG -= qt
+#QMAKE_CXXFLAGS+= -fsanitize=address -fsanitize=leak -fno-omit-frame-pointer
+#QMAKE_CXXFLAGS+= -fsanitize=safe-stack -fno-omit-frame-pointer
 
 LIBS += -lglfw3 -lGL -lGLEW -lm -lXrandr -lXi -lX11 -lXxf86vm -lpthread -lopenal
 
-SOURCES += main.cpp \
-    utils/Log.cpp \
+SOURCES += \
+    util/Error.cpp \
+    util/Log.cpp \
+    util/StringUtils.cpp \
+    main.cpp \
+    stb_vorbis.c \
+    al/ALBackend.cpp \
     al/ALBuffer.cpp \
-    al/ALCreateSample.cpp \
-    al/ALDevice.cpp \
-    al/ALError.cpp \
-    al/ALListener.cpp \
     al/ALOggSample.cpp \
-    al/ALSample.cpp \
-    al/ALSource.cpp \
     al/ALWavSample.cpp \
-    AudioSystem.cpp \
-    utils/StringUtils.cpp \
-    utils/Error.cpp
+    al/ALUtil.cpp \
+    al/ALSource.cpp \
+    al/ALSoundEmitter.cpp \
+    al/ALListener.cpp \
+    AudioSystem.cpp
+    main.cpp \
 
 HEADERS += \
+    stb_image.h \
     stb_vorbis.h \
-    utils/Log.hpp \
-    utils/Singleton.hpp \
+    util/Debug.hpp \
+    util/Error.hpp \
+    util/Exception.hpp \
+    util/Log.hpp \
+    util/NonCopyable.hpp \
+    util/Singleton.hpp \
+    util/StringUtils.hpp \
+    al/ALSoundBase.hpp \
+    al/ALBackend.hpp \
     al/ALBuffer.hpp \
-    al/ALCreateSample.hpp \
-    al/ALDevice.hpp \
-    al/ALError.hpp \
-    al/ALListener.hpp \
     al/ALOggSample.hpp \
-    al/ALPositionSource.hpp \
-    al/ALSample.hpp \
-    al/ALSource.hpp \
-    al/ALSourceBase.hpp \
     al/ALWavSample.hpp \
-    AudioSystem.hpp \
-    utils/Debug.hpp \
-    utils/Exception.hpp \
-    utils/StringUtils.hpp \
-    utils/Error.hpp \
-    utils/NonCopyable.hpp
+    al/ALUtil.hpp \
+    al/ALSource.hpp \
+    al/ALSoundEmitter.hpp \
+    al/ALListener.hpp \
+    openglbacked.hpp \
+    AudioSystem.hpp

@@ -5,20 +5,19 @@ namespace audio
 namespace al
 {
 
-Buffer::Buffer()
+ALBuffer::ALBuffer() : m_buffer(0)
 {
     alGenBuffers(1, &m_buffer);
     LOG("Generated buffer");
 }
 
-Buffer::~Buffer()
+ALBuffer::~ALBuffer()
 {
     alDeleteBuffers(1, &m_buffer);
-
     LOG("Deleted buffer");
 }
 
-ALuint Buffer::getBuffer()
+ALuint ALBuffer::getBuffer() const
 {
     return m_buffer;
 }
